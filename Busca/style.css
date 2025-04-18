@@ -1,0 +1,23 @@
+*{
+    margin: 0vw;
+}
+.container{
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    background-color:rgb(60, 153, 165);
+}
+.btn-top{
+    margin: 0 26px;
+    background: none;
+    border: none;
+    font-size: large;
+    color: white;
+} 
+.btn-top:hover{
+    background: none;
+    transition: 0.5s ease-in-out;
+    box-shadow: 2px 2px 2px 2px white;
+    color: black;
+    font-size: larger;
+}

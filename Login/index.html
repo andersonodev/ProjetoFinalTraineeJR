@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">  <!-- Chamada do arquivo css -->
+    <script src="script.js"></script>
     <title> Login </title>
 </head>
 <body>
@@ -11,7 +12,7 @@
         <div class="container">  <!-- Criação do Container que vai conter os botões --> 
             <button class="btn-top">Home</button>  
             <a href="index.html" class="btn-top">Login</a> <!-- Botão que vai para a página de login -->
-            <a href="/Registros/index.html"class="btn-top">Registros</a> <!-- Botão que vai para a página de registros -->
+            <button class="btn-top" onclick="teste()">Registros</button> <!-- Botão que vai para a página de registros -->
         </div>
     </header>
     <div class="container2"> <!-- Criação do Container que vai conter a imagens e campos de login --> 
@@ -22,14 +23,15 @@
             <h1>Login<hr></h1> 
 
             <h3>Usuário</h3>
-            <input type="text" placeholder="Digite seu nome"> <!-- Campo para inserir o nome do usuário -->
+            <input type="text" id="user" placeholder="Digite seu nome"> <!-- Campo para inserir o nome do usuário -->
+            <h6>admin</h6>
 
             <h3>Senha</h3>
-            <input type="password" placeholder="Digite sua senha"> <!-- Campo para inserir a senha do usuário -->
-
+            <input type="password" id="pass" placeholder="Digite sua senha"> <!-- Campo para inserir a senha do usuário -->
+            <h6>12345</h6>
             <a href=""><h5>Esqueceu sua senha?</h5></a> <!-- Opção para quem tiver esquecido a senha -->
 
-            <a href="/Registros/index.html"><button class="logar">Login</button></a>
+            <button class="logar" type="button" onclick="login()">Login</button>
 
         </div>
     </div>

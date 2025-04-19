@@ -34,4 +34,12 @@
         
     </div>
 </body>
+<script>
+    window.onload = function() {
+        const loggedIn = sessionStorage.getItem('loggedIn');
+        if (loggedIn !== 'true') {
+            window.location.href = '/Login/index.html'; // Se não estiver logado, redireciona para a página de login
+        }
+    }
+</script>
 </html>

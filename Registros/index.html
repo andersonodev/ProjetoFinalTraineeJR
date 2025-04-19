@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Registros</title>
+    <title>Document</title>
 </head>
 <body>
     <header>
@@ -14,16 +14,31 @@
             <a href="/Registros/index.html"><button class="btn-top">Registros</button></a>
         </div>
     </header>
-    <h1>buscador</h1>
-    <a href="/Resultados/index.html"><button class="btn">Resultados</button></a>
+    
+    <div class="container3">
+    <div class="containerregistro">
+            <h1>Nenhum resultado encontrado</h1>
+        </div>
+
+    
+    <div class="containerbusca">
+
+                    <div class="busca"> <!-- Criação da div busca -->
+            <h1>Busca de aluno</h1> 
+
+            <input type="text" placeholder="Nome do aluno"> <!-- Campo para inserir o nome do aluno -->
+
+            <input type="password" placeholder="Setor do aluno"> <!-- Campo para inserir o setor do aluno-->
+
+            <a href="/Resultados/index.html"><button class="buscar">Buscar</button></a>
+
+        </div>
+    </div>
+        </div>
+        
+</div>
+
+
+
 </body>
-<script>
-    window.onload = function() {
-        const loggedIn = sessionStorage.getItem('loggedIn');
-        if (loggedIn !== 'true') {
-            
-            window.location.href = '/Login/index.html'; // Se não estiver logado, redireciona para a página de login
-        }
-    }
-</script>
 </html>

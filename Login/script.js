@@ -9,12 +9,12 @@ function login() { /* Define a função de login */
     
 
     if (usuario === userValido && senha === senhaValida) { /* Verifica se o usuário e senha são iguais aos definidos*/
-        window.location.href = '/Registros/index.html';/* Se sim, envia para a página de registros */
         alert("logado com sucesso!"); 
+        window.location.href = '/Registros/index.html';/* Se sim, envia para a página de registros */
         return sessionStorage.setItem('loggedIn', 'true'); /* "logado" recebe o valor "positivo" */
         
     } else {
-        alert("Senha ou usuários incorretos!") 
+        alert("Senha ou usuários incorretos!") /* Se não, envia um alerta */
     }
     
 

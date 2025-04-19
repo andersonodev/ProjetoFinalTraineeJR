@@ -1,0 +1,90 @@
+*{
+    margin: 0vw;
+}
+.containerregistro{
+    flex: 1;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(32, 74, 80);
+    color: white;
+}
+
+.container3{
+    display: flex;
+    
+}
+
+.containerbusca{
+    height: 100vh;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.container{
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    background-color:rgb(40, 123, 134);
+    position: fixed;
+    width: 100%;
+
+}
+
+.btn-top{
+    margin: 2vh 26px;
+    background: none;
+    border: none;
+    font-size: large;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.4s ease-in-out;
+} 
+.btn-top:hover{
+    border: none;
+    transition: 0.4s ease-in-out;
+    color: black;
+    font-size: 1.3rem;
+}
+
+.buscar{
+    cursor: pointer;
+    border: none;
+    color: rgb(0, 0, 0);
+    width: 11vw;
+    border-radius: 25px;
+    background-color: rgb(37, 157, 173);
+    margin-top: 2vh;
+    color:white
+}
+
+h3{
+    font-weight: 400;
+    margin-top: 4vh;
+}
+
+input{
+    border-radius: 17px;
+    border: none;
+    width: 10.4vw;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    padding: 6px;
+    margin-top: 1vh;
+}
+
+h5{
+    margin-top: 4vh;
+}
+
+.busca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+

@@ -1,17 +1,41 @@
 *{
-    margin: 0vw;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0vw;
+}
+.containerregistro{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(37, 157, 173);
+    color: white;
 }
 
-.container{
+.container2{
+    display: flex;
+    height: 100vh;
+}
+
+.containerbusca{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.containerTop{
     height: 7vh;
-    width: 100%;
     display: flex;
     justify-content: center;
     background-color:rgb(40, 123, 134);
+    position: fixed;
+    width: 100%;
+
 }
+
 .btn-top{
-    margin: 2vh 30px;
+    margin: 2vh 26px;
     background: none;
     border: none;
     font-size: large;
@@ -21,68 +45,55 @@
     transition: 0.4s ease-in-out;
 } 
 .btn-top:hover{
+    border: none;
     transition: 0.4s ease-in-out;
     color: black;
     font-size: 1.3rem;
 }
-.container2{
-    display:flex ;  
-    height: 100vh;
+button{
+    padding: 0;
 }
-.a1{
-    flex: 1;
+.buscar{
+    cursor: pointer;
+    border: none;
+    width: 14.6vw;
+    height: 3.5vh;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    border-radius: 25px;
     background-color: rgb(37, 157, 173);
-    display: flex;
-    justify-content: center;
+    margin-top: 2vh;
+    color:white
 }
-.a2{
-    display: flex;
-    justify-content: center;
-    flex: 1;
-}
-.a3{
-    margin: 5vw;
-    justify-items: center;
-}
-h1.result{
-    color: white;
+
+h3{
     font-weight: 400;
-    margin: 7vw;
+    margin-top: 4vh;
+}
+
+input{
+    border-radius: 17px;
+    display: flex;
+    border: none;
+    width: 14vw;
+    height: 2vh;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    padding: 6px;
 }
 h1.pesquisa{
     font-size: 5vh;
     font-weight: 400;
     margin-top: 2vw;
 }
-input{
-    border-radius: 17px;
-    display: flex;
-    border: none;
-    width: 16vw;
-    height: 2.8vh;
-    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
-    padding: 6px;
-    margin: 12vh;
-}
-.btn{
-    margin: 2vh;
-    width: 16vw;
-    height: 3.5vh;
-    background: rgb(37, 157, 173);
-    border: none;
-    font-size: large;
+h1.result{
     color: white;
-    cursor: pointer;
-    text-decoration: none;
-    border-radius: 1.6vh;
-    transition: 0.4s ease-in-out;
+    font-weight: 400;
+    margin-top: -30vw;
 }
-#ipt1{
-    display: flex;
-    margin: 8vh;
+h5{
+    margin-top: 4vh;
+}
 
-}
-#ipt2{
+.busca {
     display: flex;
     margin: 8vh;
 }
@@ -98,3 +109,4 @@ input{
 .card:hover {
     background-color: #f0f0f0;
 }
+

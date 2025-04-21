@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
+    <script src="script.js"></script>
     <title>Resultados</title>
 </head>
 <body>
@@ -18,14 +19,15 @@
     <div class="container2">
 
         <div class="a1">
+            <div id="resultados"></div>
             <h1 class="result">Resultados:</h1>
         </div>
         <div class="a2">
             <div class="a3">
             <h1 class="pesquisa">Busca de aluno</h1>
-            <input type="text" placeholder="Nome do aluno" id="ipt1">
-            <input type="text" placeholder="Setor do aluno" id="ipt2">
-            <button type="button" class="btn">Pesquisar</button>
+            <input type="text" placeholder="Nome do aluno" id="nomeInput">
+            <input type="text" placeholder="Setor do aluno" id="setorInput">
+            <button type="button" class="btn"  onclick="buscarAlunos()">Pesquisar</button>
             <!-- Botão temporario -->
             <br>
             <a href="/Info/index.html"><button>info</button></a>

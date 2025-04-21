@@ -95,9 +95,18 @@ h5{
 
 .busca {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5vw;
-    margin-top: 11.1vh;
+    margin: 8vh;
+}
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card:hover {
+    background-color: #f0f0f0;
 }
 

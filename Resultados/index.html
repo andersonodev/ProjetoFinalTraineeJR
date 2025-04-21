@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
+    <script src="script.js"></script>
     <title>Resultados</title>
 </head>
 <body>
@@ -15,6 +16,7 @@
         </div>
     </header>
 
+
     <div class="container2"> <!-- Abertura do container principal -->
         <div class="containerregistro"> <!-- abertura do container esquerdo -->
             <h1 class="result">Resultados:</h1>
@@ -24,11 +26,11 @@
             <div class="busca"> <!-- Criação da div busca -->
                 <h1 class="pesquisa">Busca de aluno</h1> 
     
-                <input type="text" placeholder="Nome do aluno"> <!-- Campo para inserir o nome do aluno -->
+                <input type="text" placeholder="Nome do aluno" id="nomeInput"> <!-- Campo para inserir o nome do aluno -->
     
-                <input type="password" placeholder="Setor do aluno"> <!-- Campo para inserir o setor do aluno-->
+                <input type="password" placeholder="Setor do aluno" id="setorInput"> <!-- Campo para inserir o setor do aluno-->
     
-                <a href="/Resultados/index.html"><button class="buscar">Buscar</button></a>
+                <a href="/Resultados/index.html"><button class="buscar" onclick="buscarAlunos()">Buscar</button></a>
 
                 <br><a href="/Info/index.html"><button>info</button></a>  <!-- Botão temporario -->
             </div>

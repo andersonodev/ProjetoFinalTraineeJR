@@ -1,0 +1,127 @@
+/* Reseta as margens e define a fonte padrão para todo o documento */
+* {
+    margin: 0vw; /* Remove margens padrão */
+    font-family: Arial, Helvetica, sans-serif; /* Define a fonte padrão */
+}
+
+/* Estilo para o contêiner principal */
+.container {
+    height: 7vh; /* Altura do contêiner em relação à altura da viewport */
+    width: 100%; /* Largura total da tela */
+    display: flex; /* Utiliza flexbox para layout */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    background-color: rgb(40, 123, 134); /* Cor de fundo do contêiner */
+}
+
+/* Estilo para os botões no topo */
+.btn-top {
+    margin: 2vh 30px; /* Margens verticais e horizontais */
+    background: none; /* Sem fundo */
+    border: none; /* Sem borda */
+    font-size: large; /* Tamanho da fonte */
+    color: white; /* Cor do texto */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    text-decoration: none; /* Remove sublinhado */
+    transition: 0.4s ease-in-out; /* Transição suave para efeitos */
+}
+
+/* Efeito de hover para os botões no topo */
+.btn-top:hover {
+    transition: 0.4s ease-in-out; /* Mantém a transição suave */
+    color: black; /* Muda a cor do texto ao passar o mouse */
+    font-size: 1.3rem; /* Aumenta o tamanho da fonte ao passar o mouse */
+}
+
+/* Estilo para o segundo contêiner */
+.container2 {
+    display: flex; /* Utiliza flexbox para layout */
+    margin: 0; /* Remove margens */
+}
+
+/* Estilo para a seção de login */
+.login {
+    padding: 10vw; /* Espaçamento interno */
+    flex: 1; /* Permite que o elemento cresça para ocupar espaço disponível */
+    display: flex; /* Utiliza flexbox para layout */
+    flex-direction: column; /* Alinha os filhos em coluna */
+    justify-content: center; /* Centraliza verticalmente */
+}
+
+/* Estilo para o título principal */
+h1 {
+    font-size: 2.6vw; /* Tamanho da fonte em relação à largura da viewport */
+}
+
+/* Estilo para subtítulos */
+h3 {
+    font-weight: 400; /* Peso da fonte */
+    margin-top: 4vh; /* Margem superior */
+}
+
+/* Estilo para textos menores */
+h5 {
+    color: rgba(100, 100, 100, 0.555); /* Cor com opacidade */
+    font-weight: 600; /* Peso da fonte */
+    margin-top: 3vh; /* Margem superior */
+    margin-bottom: 2vh; /* Margem inferior */
+    font-style: none; /* Sem estilo de fonte */
+}
+h6{
+    font-weight: 200;
+    margin-top: 0.6vw;
+    color: rgba(0, 0, 0, 0.808);
+}
+
+/* Estilo para campos de entrada */
+input {
+    border-radius: 17px; /* Bordas arredondadas */
+    border: none; /* Sem borda */
+    width: 12vw; /* Largura em relação à viewport */
+    box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.452); /* Sombra para profundidade */
+    padding: 7px; /* Espaçamento interno */
+    margin-top: 1vh; /* Margem superior */
+}
+
+/* Estilo para linhas horizontais */
+hr {
+    width: 7.2vw; /* Largura em relação à viewport */
+    height: 0.19vh; /* Altura da linha */
+    border: none; /* Sem borda */
+    border-radius: 6px; /* Bordas arredondadas */
+    background-color: rgb(37, 157, 173); /* Cor de fundo da linha */
+}
+
+/* Estilo para a imagem */
+.imagem {
+    flex: 1; /* Permite que o elemento cresça para ocupar espaço disponível */
+    justify-content: center; /* Centraliza horizontalmente */
+    display: flex; /* Utiliza flexbox para layout */
+    margin-right: -5vh; /* Margem negativa à direita */
+    margin-left: 10vw; /* Margem à esquerda */
+}
+
+/* Estilo para imagens */
+img {
+    width: 35vw; /* Largura em relação à viewport */
+}
+
+/* Estilo para botões */
+button {
+    padding: 0; /* Remove espaçamento interno */
+}
+
+/* Estilo para o botão de login */
+.logar {
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+    border: none; /* Sem borda */
+    color: white; /* Cor do texto */
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452); /* Sombra do botão */
+    width: 12.4vw;  /* Comprimento em relação à viewport */
+    height: 3.5vh; /* Largura em relação à viewport */
+    border-radius: 25px; /* Bordas arredondadas */
+    background-color: rgb(37, 157, 173); /* Cor de fundo do botão*/
+}
+/* Estilo para a tag a */
+a{
+    text-decoration: none; /* remove o efeito da tag a */
+}

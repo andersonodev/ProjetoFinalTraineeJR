@@ -1,0 +1,97 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0vw;
+}
+.containerregistro{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(37, 157, 173);
+    color: white;
+}
+
+.container2{
+    display: flex;
+    height: 100vh;
+}
+
+.containerbusca{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.containerTop{
+    height: 7vh;
+    display: flex;
+    justify-content: center;
+    background-color:rgb(40, 123, 134);
+    position: fixed;
+    width: 100%;
+
+}
+
+.btn-top{
+    margin: 2vh 26px;
+    background: none;
+    border: none;
+    font-size: large;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.4s ease-in-out;
+} 
+.btn-top:hover{
+    border: none;
+    transition: 0.4s ease-in-out;
+    color: black;
+    font-size: 1.3rem;
+}
+button{
+    padding: 0;
+}
+.buscar{
+    cursor: pointer;
+    border: none;
+    width: 14.6vw;
+    height: 3.5vh;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    border-radius: 25px;
+    background-color: rgb(37, 157, 173);
+    margin-top: 2vh;
+    color:white
+}
+
+h3{
+    font-weight: 400;
+    margin-top: 4vh;
+}
+
+input{
+    border-radius: 17px;
+    display: flex;
+    border: none;
+    width: 14vw;
+    height: 2vh;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    padding: 6px;
+}
+h1.pesquisa{
+    font-size: 5vh;
+    font-weight: 400;
+    margin-top: 2vw;
+}
+h5{
+    margin-top: 4vh;
+}
+
+.busca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vw;
+}
+

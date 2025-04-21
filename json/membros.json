@@ -1,0 +1,42 @@
+[
+    {
+      "nome": "João Silva",
+      "curso": "Engenharia de Computação",
+      "idade": 21,
+      "dataEntradaEmpresa": "2023-02-15",
+      "advertencias": 1,
+      "notificacoes": 3
+    },
+    {
+      "nome": "Maria Oliveira",
+      "curso": "Administração",
+      "idade": 23,
+      "dataEntradaEmpresa": "2022-09-10",
+      "advertencias": 0,
+      "notificacoes": 2
+    },
+    {
+      "nome": "Pedro Costa",
+      "curso": "Ciência da Computação",
+      "idade": 22,
+      "dataEntradaEmpresa": "2021-08-01",
+      "advertencias": 2,
+      "notificacoes": 5
+    },
+    {
+      "nome": "Ana Lima",
+      "curso": "Economia",
+      "idade": 24,
+      "dataEntradaEmpresa": "2020-05-20",
+      "advertencias": 0,
+      "notificacoes": 1
+    },
+    {
+      "nome": "Lucas Mendes",
+      "curso": "Design Gráfico",
+      "idade": 20,
+      "dataEntradaEmpresa": "2024-01-12",
+      "advertencias": 3,
+      "notificacoes": 4
+    }
+  ]

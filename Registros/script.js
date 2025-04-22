@@ -1,6 +1,6 @@
 let alunosJSON = [];
 
-// Função para carregar dados de alunos (normalmente viria de um arquivo JSON ou API)
+// Função para carregar dados de alunos
 async function carregarAlunos() {
     try {
         const response = await fetch('/json/alunos.json');
@@ -47,37 +47,35 @@ function criarCardDesc(aluno) {
     return card1;
 }
 
-// Função para buscar os alunos com base nos campos de filtro
+// Função para buscar os alunos
 function buscarAlunos() {
     const nomeInput = document.getElementById('nomeInput').value.trim().toLowerCase();
     const setorInput = document.getElementById('setorInput').value.trim().toLowerCase();
     const resultadosDiv = document.getElementById('resultados');
     const padrao = document.getElementById('resultadoPadrao');
     const mensagemErro = document.getElementById('mensagemErro');
-    const limparButton = document.getElementById('limparButton'); 
+    const limparButton = document.getElementById('limparButton');
+    const tituloResultados = document.getElementById('tituloResultados');
 
-    // Limpa resultados e mensagens de erro
+    // Limpa resultados e mensagens
     resultadosDiv.innerHTML = '';
     mensagemErro.innerHTML = '';
     padrao.style.display = 'block';
-
-    // Esconde o botão de limpar inicialmente
+    tituloResultados.style.display = 'none';
     limparButton.style.display = 'none';
 
-    // Validação: pelo menos um campo precisa ser preenchido
+    // Validação
     if (!nomeInput && !setorInput) {
         mensagemErro.innerHTML = 'Preencha pelo menos um dos campos.';
         return;
     }
 
-    // Filtra os alunos com base nos campos de pesquisa
+    // Filtra alunos
     const alunosFiltrados = alunosJSON.filter(aluno => {
         const nomeAluno = aluno.nome?.toLowerCase() || '';
         const setorAluno = aluno.setor?.toLowerCase() || '';
-
         const nomeCombina = nomeInput ? nomeAluno.includes(nomeInput) : true;
         const setorCombina = setorInput ? setorAluno.includes(setorInput) : true;
-
         return nomeCombina && setorCombina;
     });
 
@@ -86,13 +84,12 @@ function buscarAlunos() {
         return;
     }
 
-    // Esconde o conteúdo padrão
+    // Oculta padrão e mostra título
     padrao.style.display = 'none';
-
-    // Exibe o botão de limpar após uma pesquisa bem-sucedida
+    tituloResultados.style.display = 'block';
     limparButton.style.display = 'block';
 
-    // Cria e adiciona os cards de alunos encontrados
+    // Exibe cards
     alunosFiltrados.forEach(aluno => {
         const card = criarCardAluno(aluno);
         resultadosDiv.appendChild(card);
@@ -101,33 +98,25 @@ function buscarAlunos() {
 
 // Função para limpar a pesquisa
 function limparPesquisa() {
-    // Limpa os campos de entrada
     document.getElementById('nomeInput').value = '';
     document.getElementById('setorInput').value = '';
-
-    // Limpa os resultados e a mensagem de erro
     const resultadosDiv = document.getElementById('resultados');
     resultadosDiv.innerHTML = '';
     const mensagemErro = document.getElementById('mensagemErro');
     mensagemErro.innerHTML = '';
-
-    // Mostra novamente o conteúdo padrão
     const padrao = document.getElementById('resultadoPadrao');
     padrao.style.display = 'block';
-
-    // Esconde o botão de limpar após limpar a pesquisa
     const limparButton = document.getElementById('limparButton');
     limparButton.style.display = 'none';
+    const tituloResultados = document.getElementById('tituloResultados');
+    tituloResultados.style.display = 'none';
 }
 
-// Inicializa os dados dos alunos ao carregar a página
 window.addEventListener('DOMContentLoaded', carregarAlunos);
 
-// Configura os eventos de busca e limpar
 document.getElementById('buscarButton').addEventListener('click', buscarAlunos);
 document.getElementById('limparButton').addEventListener('click', limparPesquisa);
 
-// Permite realizar a busca pressionando Enter
 document.getElementById('nomeInput').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         e.preventDefault();

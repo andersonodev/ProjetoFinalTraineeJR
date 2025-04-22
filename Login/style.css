@@ -5,12 +5,14 @@
 }
 
 /* Estilo para o contêiner principal */
-.container {
+.containerTop {
     height: 7vh; /* Altura do contêiner em relação à altura da viewport */
     width: 100%; /* Largura total da tela */
     display: flex; /* Utiliza flexbox para layout */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    justify-content: center;
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
     background-color: rgb(40, 123, 134); /* Cor de fundo do contêiner */
+    gap: 1vw; /* Espaçamento entre os botões */
 }
 
 /* Estilo para os botões no topo */
@@ -67,9 +69,9 @@ h5 {
     font-style: none; /* Sem estilo de fonte */
 }
 h6{
-    font-weight: 200;
-    margin-top: 0.6vw;
-    color: rgba(0, 0, 0, 0.808);
+    font-weight: 200; /* Peso da fonte */
+    margin-top: 0.6vw; /* Margem superior */
+    color: rgba(0, 0, 0, 0.808); /* Cor com opacidade */
 }
 
 /* Estilo para campos de entrada */
@@ -112,6 +114,7 @@ button {
 
 /* Estilo para o botão de login */
 .logar {
+    font-size: x-large; /* Tamanho da fonte */
     cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
     border: none; /* Sem borda */
     color: white; /* Cor do texto */

@@ -27,7 +27,8 @@
 .containerTop{
     height: 7vh;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    align-content: center;
     background-color:rgb(40, 123, 134);
     position: fixed;
     width: 100%;

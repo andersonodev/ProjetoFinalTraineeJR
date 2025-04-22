@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"> 
     <script src="script.js" defer></script>
-    <title>Resultados</title>
+    <title>Registros</title>
 </head>
 <body>
     <header>
@@ -18,8 +18,11 @@
 
     <div class="container2"> <!-- Abertura do container principal -->
         <div class="containerregistro"> <!-- abertura do container esquerdo -->
-            <div id="resultados"></div> <!-- Div para exibir os resultados -->
             <div id="resultadoPadrao">Nenhum resultado encontrado</div>
+            <div id="resultados"> <!-- Div para exibir os resultados -->
+            <h1>Resultados:</h1>
+            <div id="cards"></div> 
+        </div>
         </div>
 
         <div class="containerbusca">
@@ -29,6 +32,8 @@
                 <input type="text" placeholder="Nome do aluno" id="nomeInput"> <!-- Campo para inserir o nome do aluno -->
                 <input type="text" placeholder="Setor do aluno" id="setorInput"> <!-- Campo para inserir o setor do aluno-->
                 <button class="buscar" id="buscarButton">Buscar</button> <!-- Botão de busca -->
+                <button id="limparButton">Limpar Pesquisa</button>
+                <div id="mensagemErro" class="mensagem-erro"></div>
                 
             </div>
         </div> 

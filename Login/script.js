@@ -12,7 +12,7 @@ function login() { /* Define a função de login */
     if (usuario === userValido && senha === senhaValida) { /* Verifica se o usuário e senha são iguais aos definidos*/
         alert("logado com sucesso!"); 
         console.log('loggedIn')
-        window.location.href = '/Resultados/index.html';/* Se sim, envia para a página de registros */
+        window.location.href = '/Registros/index.html';/* Se sim, envia para a página de registros */
         return sessionStorage.setItem('loggedIn', 'true'); /* "logado" recebe o valor "positivo" */
         
     } else {
@@ -27,6 +27,6 @@ function teste(){
         alert("Você precisa estar logado!")
     }
     else{
-        window.location.href = '/Resultados/index.html';
+        window.location.href = '/Registros/index.html';
     }
 }

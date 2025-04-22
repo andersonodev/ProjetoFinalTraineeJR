@@ -104,16 +104,17 @@ h5{
 }
 
 .card {
-    border: 1px solid #ccc;
+    border: 1px solid rgb(37, 157, 173);
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 60px;
 }
 
 .card:hover {
-    background-color: #f0f0f0;
+    background-color: rgb(23, 94, 104);
 }
 #resultadoPadrao{
     text-align: center;

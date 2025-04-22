@@ -31,7 +31,6 @@
 .btn-top:hover {
     transition: 0.4s ease-in-out; /* Mantém a transição suave */
     color: black; /* Muda a cor do texto ao passar o mouse */
-    font-size: xx-large; /* Aumenta o tamanho da fonte ao passar o mouse */
 }
 
 /* Estilo para o segundo contêiner */

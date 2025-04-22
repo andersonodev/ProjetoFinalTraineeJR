@@ -3,7 +3,7 @@ let alunosJSON = [];
 // Função para carregar dados de alunos (normalmente viria de um arquivo JSON ou API)
 async function carregarAlunos() {
     try {
-        const response = await fetch('alunos.json');
+        const response = await fetch('/json/alunos.json');
         if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
         alunosJSON = await response.json();
     } catch (error) {

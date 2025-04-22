@@ -231,3 +231,13 @@ h5{
 #limparButton:hover{
     color:rgba(0, 0, 0, 0.753);
 }
+
+.containerregistro h4 {
+    position: absolute;
+    top: 90px;
+    left: 25%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 10px 0;
+    font-size: 60px;
+}

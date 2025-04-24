@@ -4,7 +4,6 @@
 }
 .containerregistro{
     flex: 1;
-    align-content: flex-start;
     padding-top: 5vw;
     display: flex;
     justify-content: center;
@@ -28,7 +27,7 @@
 
 .containerTop{
     height: 7vh;
-    width: 100%;
+    width: 102vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +40,7 @@
 
 .btn-top{
     align-self: center;
-    margin: 2vh 26px;
+    margin: 2vh 30px;
     background: none;
     border: none;
     font-size: x-large;
@@ -62,7 +61,7 @@ button{
     cursor: pointer;
     border: none;
     width: 14.6vw;
-    height: 3.5vh;
+    height: 4vh;
     box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
     border-radius: 25px;
     background-color: rgb(37, 157, 173);
@@ -109,49 +108,14 @@ h5{
     align-items: flex-start;
     background-color: #fff;
     color: #000;
-    margin-top: 3vh;
-    padding: 15px;
+    margin-top: 2vh;
+    padding: 1vw;
     width: 25vw;
     cursor: pointer;
     transition: background 0.2s;
     display: block;
 }
 
-
-.card1 {
-    
-    color: white;
-    background-color:rgb(37, 157, 173);
-    padding: 20px;
-    border-radius: 5px;
-}
-
-.card1 h1 {
-    gap: 1vw;
-    display: flex;
-    justify-content: center;
-    margin-top: 0;
-    font-size: 3.6vw;
-}
-.card1 h2 {
-    font-size: x-large;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5vw;
-    margin-bottom: 2vh;
-}
-
-.card1 p {
-    font-size: larger;
-    margin: 1vw;
-}
-
-.card1 h3 {
-    gap: 1vw;
-    margin: 10px 0 0;
-    font-size: 3.8vw;
-}
 
 .enviar-btn {
     background-color: rgb(37, 157, 173);
@@ -207,8 +171,6 @@ h5{
     color: white;
     font-size: larger;
     flex-direction: column; /* Para exibir como lista */
-    gap: 15px;
-    margin-top: 20px;
 }
 
 .mensagem-erro {
@@ -219,25 +181,28 @@ h5{
 }
 #limparButton {
     display: none;
-    margin-top: 2vh;
-    padding: 10px;
+    padding: 0.6vw;
     background-color: rgba(37, 157, 173, 0.719);
     color: white;
     border: none;
     cursor: pointer;
     box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
-    border-radius: 20px;
+    border-radius: 1.5vw;
 }
 #limparButton:hover{
     color:rgba(0, 0, 0, 0.753);
 }
 
 .containerregistro h4 {
+    display: none;
     position: absolute;
     top: 90px;
     left: 25%;
     transform: translateX(-50%);
     margin: 0;
     padding: 10px 0;
-    font-size: 60px;
+    font-size: 4vw;
+}
+a{
+    border: none;
 }

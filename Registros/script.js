@@ -1,3 +1,8 @@
+if (sessionStorage.getItem('loggedIn') !== "true") {
+   window.location.href = '/Login/index.html';
+    alert("Você precisa estar logado!");
+  }
+
 let alunosJSON = [];
 
 // Função para carregar dados de alunos
@@ -16,6 +21,8 @@ function criarCardAluno(aluno) {
     const card = document.createElement('div');
     const resultados = document.getElementById('resultados');
     resultados.style.display = 'flex';
+    
+    
     card.classList.add('card');
     card.innerHTML = `
         <h3>Nome: ${aluno.nome}</h3>
@@ -33,6 +40,7 @@ function criarCardAluno(aluno) {
 function criarCardDesc(aluno) {
     const card1 = document.createElement('div');
     card1.classList.add('card1');
+    tituloResultados.style.display = 'none';
     card1.innerHTML = `
         <h1>${aluno.nome}</h1>
         <h2>Setor: ${aluno.setor}</h2>

@@ -1,13 +1,13 @@
 /* Reseta as margens e define a fonte padrão para todo o documento */
 * {
-    margin: 0vw; /* Remove margens padrão */
+    margin: 0; /* Remove margens padrão */
     font-family: Arial, Helvetica, sans-serif; /* Define a fonte padrão */
 }
 
 /* Estilo para o contêiner principal */
 .containerTop {
     height: 7vh; /* Altura do contêiner em relação à altura da viewport */
-    width: 100%; /* Largura total da tela */
+    width: 102vw; /* Largura total da tela */
     display: flex; /* Utiliza flexbox para layout */
     justify-content: center; /* Centraliza o conteúdo */
     align-items: center; /* Centraliza o conteúdo */
@@ -86,7 +86,7 @@ input {
 /* Estilo para linhas horizontais */
 hr {
     width: 7.2vw; /* Largura em relação à viewport */
-    height: 0.19vh; /* Altura da linha */
+    height: 0.4vh; /* Altura da linha */
     border: none; /* Sem borda */
     border-radius: 6px; /* Bordas arredondadas */
     background-color: rgb(37, 157, 173); /* Cor de fundo da linha */
@@ -113,13 +113,13 @@ button {
 
 /* Estilo para o botão de login */
 .logar {
-    font-size: x-large; /* Tamanho da fonte */
+    font-size: 2.5vh; /* Tamanho da fonte */
     cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
     border: none; /* Sem borda */
     color: white; /* Cor do texto */
     box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452); /* Sombra do botão */
     width: 12.4vw;  /* Comprimento em relação à viewport */
-    height: 3.5vh; /* Largura em relação à viewport */
+    height: 4vh; /* Largura em relação à viewport */
     border-radius: 25px; /* Bordas arredondadas */
     background-color: rgb(37, 157, 173); /* Cor de fundo do botão*/
 }

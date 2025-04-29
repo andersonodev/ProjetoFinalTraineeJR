@@ -1,0 +1,208 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0vw;
+}
+.containerregistro{
+    flex: 1;
+    padding-top: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(37, 157, 173);
+    color: white;
+}
+
+.container2{
+    display: flex;
+    height: 100vh;
+}
+
+.containerbusca{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.containerTop{
+    height: 7vh;
+    width: 102vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color:rgb(40, 123, 134);
+    position: fixed;
+    
+    gap: 1vw;
+}
+
+.btn-top{
+    align-self: center;
+    margin: 2vh 30px;
+    background: none;
+    border: none;
+    font-size: x-large;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.4s ease-in-out;
+} 
+.btn-top:hover{
+    border: none;
+    transition: 0.4s ease-in-out;
+    color: black;
+}
+button{
+    padding: 0;
+}
+.buscar{
+    cursor: pointer;
+    border: none;
+    width: 14.6vw;
+    height: 4vh;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    border-radius: 25px;
+    background-color: rgb(37, 157, 173);
+    margin-top: 2vh;
+    color:white
+}
+
+h3{
+    font-weight: 400;
+}
+
+input{
+    border-radius: 17px;
+    display: flex;
+    border: none;
+    width: 14vw;
+    height: 2vh;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    padding: 6px;
+}
+h1.pesquisa{
+    font-size: 5vh;
+    font-weight: 400;
+    margin-top: 2vw;
+}
+h1.result{
+    color: white;
+    font-weight: 400;
+    margin-top: -30vw;
+}
+h5{
+    margin-top: 4vh;
+}
+
+.busca {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vw;
+}
+
+.card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #fff;
+    color: #000;
+    margin-top: 2vh;
+    padding: 1vw;
+    width: 25vw;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: block;
+}
+
+
+.enviar-btn {
+    background-color: rgb(37, 157, 173);
+    display: flex;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: larger;
+    margin: auto;
+    margin-top: 2vw;
+    text-decoration-line: underline;
+}
+.selecionar-btn{
+    background-color: rgb(196, 196, 196);
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    font-size: large;
+    border-radius: 15px;
+    border: none;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+    margin-top: 2vw;
+    width: 12vw;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    padding: 7px 10px;
+}
+.selecionar-btn:hover{
+    background-color: #1b1b1b;
+    color: white;
+    transition: 0.5s ease-in;
+    box-shadow: 0px 8px 12px  rgba(255, 255, 255, 0.658);
+}
+.info-btn{
+    cursor: pointer;
+    color: white;
+    border: none;
+    background-color: rgb(37, 157, 173);
+}
+.info-btn:hover{
+    text-decoration: underline;
+}
+#resultadoPadrao {
+    font-size: 5vh;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+#resultados {
+    display: none;
+    color: white;
+    font-size: larger;
+    flex-direction: column; /* Para exibir como lista */
+}
+
+.mensagem-erro {
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+#limparButton {
+    display: none;
+    padding: 0.6vw;
+    background-color: rgba(37, 157, 173, 0.719);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 7px 15px  rgba(0, 0, 0, 0.452);
+    border-radius: 1.5vw;
+}
+#limparButton:hover{
+    color:rgba(0, 0, 0, 0.753);
+}
+
+.containerregistro h4 {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 25%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 10px 0;
+    font-size: 4vw;
+}
+a{
+    border: none;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">  <!-- Chamada do arquivo css -->
+    <script src="script.js"></script> <!-- Chamada do arquivo JS -->
+    <title> Login </title> <!-- Título da página -->
+</head>
+<body>
+    <header>
+        <div class="containerTop">  <!-- Criação do Container que vai conter os botões --> 
+            <a class="btn-top">Home</a>  
+            <a href="index.html" class="btn-top">Login</a> <!-- Botão que vai para a página de login -->
+            <a type="button" class="btn-top" id="btn-registros" onclick="teste()">Registros</a> <!-- Botão que vai para a página de registros -->
+        </div>
+    </header>
+    <div class="container2"> <!-- Criação do Container que vai conter a imagens e campos de login --> 
+        <div class="imagem"> <!-- Div para fazer a estilização da imagem -->
+            <img title="imagem" src="/imagens/logoJR.png"> <!-- Chamada da imagem -->
+        </div>
+        <div class="login"> <!-- Criação da div que vai manter o login -->
+            <h1>Login<hr></h1> 
+
+            <h3>Usuário</h3>
+            <input type="text" id="user" placeholder="Digite seu nome"> <!-- Campo para inserir o nome do usuário -->
+            <h6>*admin*</h6>
+
+            <h3>Senha</h3>
+            <input type="password" id="pass" placeholder="Digite sua senha"> <!-- Campo para inserir a senha do usuário -->
+            <h6>*12345*</h6>
+            <a href=""><h5>Esqueceu sua senha?</h5></a> <!-- Opção para quem tiver esquecido a senha -->
+
+            <button class="logar" type="button" onclick="login()">Login</button>  <!-- Botão que tem a função para o login -->
+
+        </div>
+    </div>
+</body>
+</html>

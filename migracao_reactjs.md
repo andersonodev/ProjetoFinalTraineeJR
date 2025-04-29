@@ -53,26 +53,6 @@ npm start
 
 ---
 
-### 3.3 Separação em Componentes
-
-Criamos componentes reutilizáveis para cada parte da interface:
-
-```
-src/
-├── components/
-│   ├── Header.js
-│   ├── Footer.js
-│   ├── NotificationCard.js
-│   └── UserList.js
-├── pages/
-│   ├── Home.js
-│   ├── AdminPanel.js
-│   └── Login.js
-└── App.js
-```
-
----
-
 ### 3.4 Migração do CSS
 
 - Os arquivos `.css` originais foram importados em cada componente React.

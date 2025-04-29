@@ -57,5 +57,5 @@ A documentação completa do projeto será incluída ao final, contendo:
 
 Este projeto valoriza o trabalho em equipe. Caso algum membro possua menor conhecimento técnico, é dever dos demais auxiliá-lo no processo para garantir a entrega conjunta e a aprendizagem de todos.
 
-## , IBEEEEEEEE MECCCCCCCCC 💙💙💙💙💙
+## IBEEEEEEEE MECCCCCCCCC 💙💙💙💙💙
 

@@ -23,19 +23,19 @@ Repositório base do grupo anterior:
 
 ## ✅ Requisitos do Projeto
 
-- [x] Utilizar GitHub ou GitLab para controle de versionamento.
-- [x] Comentar o código para facilitar a leitura e manutenção.
-- [x] Desenvolver sistema de **reset de senha**.
-- [x] Criar funcionalidade de **cadastro de usuários** (restrito ao administrador).
-- [x] Implementar **sistema de notificações e advertências**:
+- [ ]  Utilizar GitHub ou GitLab para controle de versionamento.
+- [ ]  Comentar o código para facilitar a leitura e manutenção.
+- [ ]  Desenvolver sistema de **reset de senha**.
+- [ ]  Criar funcionalidade de **cadastro de usuários** (restrito ao administrador).
+- [ ]  Implementar **sistema de notificações e advertências**:
   - 3 notificações = 1 advertência
   - 3 advertências = exclusão do colaborador
-- [x] Exibir status de atividade do colaborador (ativo/inativo) e período correspondente.
-- [x] Criar **página de registros** com as advertências atribuídas.
-- [x] **Publicar a aplicação** em um serviço de hospedagem (sugestão: Firebase Hosting).
-- [x] Documentar o software ao final.
-- [x] Realizar **apresentação final**, abordando os desafios enfrentados.
-- [ ] Separar versão com apenas os requisitos obrigatórios da versão com funcionalidades extras (se houver).
+- [ ]  Exibir status de atividade do colaborador (ativo/inativo) e período correspondente.
+- [ ]  Criar **página de registros** com as advertências atribuídas.
+- [ ]  **Publicar a aplicação** em um serviço de hospedagem (sugestão: Firebase Hosting).
+- [ ]  Documentar o software ao final.
+- [ ]  Realizar **apresentação final**, abordando os desafios enfrentados.
+- [ ]  Separar versão com apenas os requisitos obrigatórios da versão com funcionalidades extras (se houver).
 
 ## 🚀 Tecnologias Sugeridas
 

@@ -19,7 +19,7 @@ function LoginPage() {
 
   return (
     <div className="login-wrapper">
-      <img src="/logoibmecjr.png" alt="Logo Ibmec Jr" className="login-logo" />
+      <img src="./logoibmecjr.png" alt="Logo Ibmec Jr" className="login-logo" />
 
       <div className="login-form">
         <h1>Login <hr /></h1>

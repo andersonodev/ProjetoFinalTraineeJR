@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
@@ -42,7 +43,7 @@ function LoginPage() {
         />
         <span className="dica">*12345*</span>
 
-        <a href="#">Esqueceu sua senha?</a>
+        <Link to="/esqueceu">Esqueceu sua senha?</Link>
 
         <button className="logar" onClick={login}>Login</button>
       </div>

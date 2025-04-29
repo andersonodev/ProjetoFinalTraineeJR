@@ -1,0 +1,175 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.containerTop {
+  height: 7vh;
+  width: 100vw;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(40, 123, 134);
+  gap: 1vw;
+  z-index: 10;
+}
+
+.btn-top {
+  margin: 2vh 30px;
+  background: none;
+  border: none;
+  font-size: x-large;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.4s ease-in-out;
+}
+
+.btn-top:hover {
+  color: black;
+}
+
+.container2 {
+  display: flex;
+  height: 100vh;
+  padding-top: 7vh; /* espaço para header fixo */
+}
+
+.containerregistro {
+  flex: 1;
+  background-color: rgb(37, 157, 173);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5vw;
+}
+
+.containerregistro h4 {
+  font-size: 4vw;
+  margin-bottom: 2vh;
+}
+
+#resultadoPadrao {
+  font-size: 5vh;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+#resultados {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  color: white;
+  font-size: larger;
+}
+
+.card {
+  background-color: #fff;
+  color: #000;
+  margin-top: 2vh;
+  padding: 1vw;
+  width: 25vw;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card1 {
+  background-color: white;
+  padding: 2vw;
+  border-radius: 8px;
+  width: 70%;
+  margin: auto;
+  color: black;
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.25);
+}
+
+.containerbusca {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.busca {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5vw;
+}
+
+input {
+  border-radius: 17px;
+  border: none;
+  width: 14vw;
+  height: 2vh;
+  padding: 6px;
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.452);
+}
+
+h1.pesquisa {
+  font-size: 5vh;
+  font-weight: 400;
+  margin-top: 2vw;
+}
+
+.buscar,
+#limparButton {
+  cursor: pointer;
+  border: none;
+  width: 14.6vw;
+  height: 4vh;
+  border-radius: 25px;
+  background-color: rgb(37, 157, 173);
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.452);
+  color: white;
+  margin-top: 2vh;
+  transition: all 0.3s ease-in-out;
+}
+
+#limparButton:hover {
+  color: rgba(0, 0, 0, 0.753);
+}
+
+.mensagem-erro {
+  color: red;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.enviar-btn {
+  background-color: rgb(37, 157, 173);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: larger;
+  cursor: pointer;
+  margin: auto;
+  margin-top: 2vw;
+  text-decoration-line: underline;
+}
+
+.selecionar-btn {
+  background-color: rgb(196, 196, 196);
+  font-size: large;
+  border-radius: 15px;
+  border: none;
+  padding: 7px 10px;
+  margin: auto;
+  margin-top: 2vw;
+  width: 12vw;
+  box-shadow: 0px 7px 15px rgba(0, 0, 0, 0.452);
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.selecionar-btn:hover {
+  background-color: #1b1b1b;
+  color: white;
+  box-shadow: 0px 8px 12px rgba(255, 255, 255, 0.658);
+}

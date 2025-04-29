@@ -1,0 +1,119 @@
+/* Base + Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body, html {
+  height: 100%;
+  background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+}
+
+/* Container Central */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5vw 2vw;
+  gap: 2vh;
+}
+
+/* Logo no topo */
+.login-logo {
+  width: 130px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.1));
+}
+
+/* Formulário */
+.login-form {
+  background-color: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: left;
+}
+
+/* Título */
+.login-form h1 {
+  font-size: 1.8rem;
+  color: #014d52;
+  margin-bottom: 0.6rem;
+}
+
+.login-form hr {
+  width: 60px;
+  height: 4px;
+  background-color: #26a69a;
+  border: none;
+  margin-bottom: 1.8rem;
+  border-radius: 4px;
+}
+
+/* Campos */
+.login-form label {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: block;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px 14px;
+  margin-top: 0.4rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.login-form input:focus {
+  box-shadow: 0 0 0 2px #26a69a;
+}
+
+/* Dica abaixo dos inputs */
+.dica {
+  font-size: 0.8rem;
+  color: #777;
+  display: block;
+  margin-top: 0.2rem;
+}
+
+/* Link */
+.login-form a {
+  font-size: 0.85rem;
+  color: #1c3faa;
+  text-decoration: underline;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Botão */
+.logar {
+  width: 100%;
+  padding: 12px;
+  background-color: #26a69a;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logar:hover {
+  background-color: #1e9088;
+}

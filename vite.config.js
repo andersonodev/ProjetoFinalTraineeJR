@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc'; // <- Corrigido!
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/ProjetoFinalTraineeJR/',  // << MUITO IMPORTANTE colocar o nome do seu repositório aqui
+  base: '/ProjetoFinalTraineeJR/',  // <-- Nome do repositório aqui
   plugins: [react()],
-})
+});

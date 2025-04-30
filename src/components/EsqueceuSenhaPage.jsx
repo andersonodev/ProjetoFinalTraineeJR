@@ -47,11 +47,11 @@ function EsqueceuSenhaPage() {
           <span className="dica-paginaesqueceu" style={{ color: 'red' }}>Formato de e-mail inválido</span>
         )}
 
-        <button className="logar-paginaesqueceu" onClick={enviarRecuperacao} disabled={!isEmailValido}>
+        <button className="botao" onClick={enviarRecuperacao} disabled={!isEmailValido}>
           Recuperar Senha
         </button>
 
-        <button className="logar-paginaesqueceu" onClick={() => navigate('/')}>
+        <button className="botao" onClick={() => navigate('/')}>
           Voltar ao Login
         </button>
       </div>

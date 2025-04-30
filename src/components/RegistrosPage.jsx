@@ -23,7 +23,7 @@ function RegistrosPage() {
 
   async function carregarAlunos() {
     try {
-      const response = await fetch('./public/json/alunos.json'); // Caminho ajustado para produção
+      const response = await fetch('/json/alunos.json'); // Caminho absoluto para ignorar o valor de base
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
       console.log('Alunos carregados:', data); // Debug

@@ -131,13 +131,32 @@ function RegistrosPage() {
               onChange={(e) => setNomeInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && buscarAlunos()}
             />
-            <input
+
+            {/*<input
               type="text"
               placeholder="Setor do aluno"
               value={setorInput}
               onChange={(e) => setSetorInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && buscarAlunos()}
-            />
+            />*/}  {/* Codigo anterior*/}
+
+            <select
+            className="filtro-setor"
+            value={setorInput} 
+            onChange={(e) => setSetorInput(e.target.value)} 
+            onKeyDown={(e) => e.key === 'Enter' && buscarAlunos()}>
+
+              <option value="" disabled hidden >Setor do aluno</option>
+              <option value="Jurídico">Jurídico</option>
+              <option value="G. de pessoas">G. de pessoas</option>
+              <option value="Vendas">Vendas</option>
+              <option value="Produtos">Produtos</option>
+              <option value="Financeiro">Financeiro</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Inovações">Inovações</option>
+
+            </select>
+
             <button className="buscar" onClick={buscarAlunos}>Buscar</button>
             {resultados.length > 0 && (
               <button id="limparButton" onClick={limparPesquisa}>

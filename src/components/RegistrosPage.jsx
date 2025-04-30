@@ -23,7 +23,7 @@ function RegistrosPage() {
 
   async function carregarAlunos() {
     try {
-      const response = await fetch('/json/alunos.json');
+      const response = await fetch('./src/components/json/alunos.json'); // Corrigir o caminho do arquivo
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
       console.log('Alunos carregados:', data); // Debug
@@ -34,8 +34,8 @@ function RegistrosPage() {
   }
 
   function buscarAlunos() {
-    const nome = nomeInput.trim().toLowerCase();
-    const setor = setorInput.trim().toLowerCase();
+    const nome = nomeInput.trim().toLowerCase(); // Garantir case-insensitive
+    const setor = setorInput.trim().toLowerCase(); // Garantir case-insensitive
 
     setMensagemErro('');
     setMostrarTitulo(false);
@@ -48,8 +48,8 @@ function RegistrosPage() {
     }
 
     const filtrados = alunos.filter((aluno) => {
-      const nomeAluno = aluno.nome?.toLowerCase() || '';
-      const setorAluno = aluno.setor?.toLowerCase() || '';
+      const nomeAluno = aluno.nome?.toLowerCase() || ''; // Garantir case-insensitive
+      const setorAluno = aluno.setor?.toLowerCase() || ''; // Garantir case-insensitive
       const nomeCombina = nome ? nomeAluno.includes(nome) : true;
       const setorCombina = setor ? setorAluno.includes(setor) : true;
       return nomeCombina && setorCombina;

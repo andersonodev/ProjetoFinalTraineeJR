@@ -22,7 +22,7 @@ function RegistrosPage() {
 
   async function carregarAlunos() {
     try {
-      const response = await fetch('./public/json/alunos.json');
+      const response = await fetch('/json/alunos.json'); // <-- caminho corrigido aqui
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
       setAlunos(data);

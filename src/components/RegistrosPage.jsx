@@ -23,7 +23,7 @@ function RegistrosPage() {
 
   async function carregarAlunos() {
     try {
-      const response = await fetch('./src/components/json/alunos.json'); // Corrigir o caminho do arquivo
+      const response = await fetch('/ProjetoFinalTraineeJR/src/components/json/alunos.json'); // Caminho ajustado para produção
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
       console.log('Alunos carregados:', data); // Debug

@@ -9,6 +9,7 @@ function RegistrosPage() {
   const [resultados, setResultados] = useState([]);
   const [mensagemErro, setMensagemErro] = useState('');
   const [mostrarTitulo, setMostrarTitulo] = useState(false);
+  const [alunoSelecionado, setAlunoSelecionado] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,41 +23,14 @@ function RegistrosPage() {
 
   async function carregarAlunos() {
     try {
-      const response = await fetch('/json/alunos.json'); // <-- caminho corrigido aqui
+      const response = await fetch('public/json/alunos.json');
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
+      console.log('Alunos carregados:', data); // Debug
       setAlunos(data);
     } catch (error) {
       console.error('Erro ao carregar os dados dos alunos:', error);
     }
-  }
-
-  function criarCardAluno(aluno) {
-    return (
-      <div
-        className="card"
-        key={aluno.nome}
-        onClick={() => {
-          setResultados([
-            <div className="card1" key="detalhes">
-              <h1>{aluno.nome}</h1>
-              <h2>Setor: {aluno.setor}</h2>
-              <p>Curso: {aluno.curso}</p>
-              <p>Idade: {aluno.idade}</p>
-              <p>Entrou: {aluno.dataEntradaEmpresa}</p>
-              <h3>Advertências: {aluno.advertencias}</h3>
-              <h3>Notificações: {aluno.notificacoes}</h3>
-              <button className="selecionar-btn">Selecionar</button>
-              <button className="enviar-btn">Enviar</button>
-            </div>,
-          ]);
-          setMostrarTitulo(false);
-        }}
-      >
-        <h3>Nome: {aluno.nome}</h3>
-        <p>Setor: {aluno.setor}</p>
-      </div>
-    );
   }
 
   function buscarAlunos() {
@@ -66,6 +40,7 @@ function RegistrosPage() {
     setMensagemErro('');
     setMostrarTitulo(false);
     setResultados([]);
+    setAlunoSelecionado(null);
 
     if (!nome && !setor) {
       setMensagemErro('Preencha pelo menos um dos campos.');
@@ -86,7 +61,11 @@ function RegistrosPage() {
     }
 
     setMostrarTitulo(true);
-    setResultados(filtrados.map((aluno) => criarCardAluno(aluno)));
+    setResultados(filtrados);
+  }
+
+  function selecionarAluno(aluno) {
+    setAlunoSelecionado(aluno);
   }
 
   function limparPesquisa() {
@@ -95,6 +74,7 @@ function RegistrosPage() {
     setMensagemErro('');
     setResultados([]);
     setMostrarTitulo(false);
+    setAlunoSelecionado(null);
   }
 
   return (
@@ -109,13 +89,36 @@ function RegistrosPage() {
 
       <div className="container2">
         <div className="containerregistro">
-          <h4 id="tituloResultados" style={{ display: mostrarTitulo ? 'block' : 'none' }}>
-            Resultados:
-          </h4>
-          {resultados.length === 0 && <div id="resultadoPadrao">Nenhum resultado encontrado</div>}
+          {mostrarTitulo && (
+            <h4 id="tituloResultados">Resultados:</h4>
+          )}
+
+          {mensagemErro && (
+            <div id="mensagemErro" className="mensagem-erro">{mensagemErro}</div>
+          )}
+
           <div id="resultados" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {resultados}
+            {resultados.map((aluno) => (
+              <div className="card" key={aluno.nome} onClick={() => selecionarAluno(aluno)}>
+                <h3>Nome: {aluno.nome}</h3>
+                <p>Setor: {aluno.setor}</p>
+              </div>
+            ))}
           </div>
+
+          {alunoSelecionado && (
+            <div className="card1">
+              <h1>{alunoSelecionado.nome}</h1>
+              <h2>Setor: {alunoSelecionado.setor}</h2>
+              <p>Curso: {alunoSelecionado.curso}</p>
+              <p>Idade: {alunoSelecionado.idade}</p>
+              <p>Entrou: {alunoSelecionado.dataEntradaEmpresa}</p>
+              <h3>Advertências: {alunoSelecionado.advertencias}</h3>
+              <h3>Notificações: {alunoSelecionado.notificacoes}</h3>
+              <button className="selecionar-btn">Selecionar</button>
+              <button className="enviar-btn">Enviar</button>
+            </div>
+          )}
         </div>
 
         <div className="containerbusca">
@@ -136,10 +139,11 @@ function RegistrosPage() {
               onKeyDown={(e) => e.key === 'Enter' && buscarAlunos()}
             />
             <button className="buscar" onClick={buscarAlunos}>Buscar</button>
-            <button id="limparButton" onClick={limparPesquisa} style={{ display: resultados.length > 0 ? 'inline-block' : 'none' }}>
-              Limpar Pesquisa
-            </button>
-            <div id="mensagemErro" className="mensagem-erro">{mensagemErro}</div>
+            {resultados.length > 0 && (
+              <button id="limparButton" onClick={limparPesquisa}>
+                Limpar Pesquisa
+              </button>
+            )}
           </div>
         </div>
       </div>

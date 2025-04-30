@@ -26,7 +26,7 @@ function RegistrosPage() {
       const response = await fetch('./json/alunos.json'); // Caminho absoluto para ignorar o valor de base
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
-      console.log('Alunos carregados:', data); // Debug
+      console.log('Alunos carregados:', data); // Debug - ignora, já vou tirar pae
       setAlunos(data);
     } catch (error) {
       console.error('Erro ao carregar os dados dos alunos:', error);

@@ -24,7 +24,7 @@ function EsqueceuSenhaPage() {
       return;
     }
 
-    alert(`Se este e-mail estiver cadastrado, enviaremos as instruções para: ${email}`);
+    alert(`Enviaremos o email com as instruções para: ${email}`);
     navigate('/');
   };
 

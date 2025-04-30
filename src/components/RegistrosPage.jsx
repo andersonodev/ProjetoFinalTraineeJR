@@ -23,7 +23,7 @@ function RegistrosPage() {
 
   async function carregarAlunos() {
     try {
-      const response = await fetch('public/json/alunos.json');
+      const response = await fetch('/json/alunos.json');
       if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
       const data = await response.json();
       console.log('Alunos carregados:', data); // Debug

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/EsqueceuSenha.css';
 
-function EsqueceuSenhaPage() {
+function EsqueceuSenhaPage() { 
   const [email, setEmail] = useState('');
   const [isEmailValido, setEmailValido] = useState(false);
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function EsqueceuSenhaPage() {
           <span className="dica-paginaesqueceu" style={{ color: 'red' }}>Formato de e-mail inválido</span>
         )}
 
-        <button className="botao" onClick={enviarRecuperacao} disabled={!isEmailValido}>
+        <button className="botao" onClick={enviarRecuperacao} disabled={!isEmailValido} >
           Recuperar Senha
         </button>
 

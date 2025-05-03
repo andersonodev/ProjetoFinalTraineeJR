@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { doc, updateDoc, onSnapshot } from "firebase/firestore";
-import db from "../lib/firebase";
+import { db } from "../lib/firebase";
 import { 
   Card, 
   CardContent, 
@@ -250,7 +250,7 @@ const Profile = () => {
                 <p className="text-xs sm:text-sm md:text-base text-blue-100 mb-2">{userData.email}</p>
                 
                 <div className="mt-1 bg-white/20 px-3 sm:px-4 py-0.5 sm:py-1 rounded-full text-white text-xs sm:text-sm">
-                  {userData.cargo || userData.role || "Membro"} {/* Display cargo first */}
+                  {userData.role || userData.role || "Membro"} {/* Display cargo first */}
                 </div>
               </div>
               
@@ -530,7 +530,7 @@ const Profile = () => {
                                   <Briefcase className="h-3.5 w-3.5" /> Cargo
                                 </Label>
                                 <div className="p-2 bg-gray-50 border rounded-md text-sm">
-                                  {userData.cargo || userData.role || "Não informado"} {/* Display cargo first */}
+                                  {userData.role || userData.role || "Não informado"} {/* Display cargo first */}
                                 </div>
                                 <p className="text-[10px] sm:text-xs text-gray-500">
                                   Definido pelo administrador

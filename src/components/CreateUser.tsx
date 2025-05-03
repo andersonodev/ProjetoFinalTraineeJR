@@ -99,29 +99,40 @@ type FormData = z.infer<typeof formSchema>;
 
 const setoresDisponiveis = [
   "Administração",
+  "Comercial",
+  "Consultoria Empresarial",
+  "Departamento Pessoal",
+  "Desenvolvimento Organizacional",
+  "Diretoria",
+  "Engenharia",
   "Financeiro",
+  "Gestão de Pessoas",
+  "Gestão de Processos",
+  "Inovações",
+  "Jurídico",
   "Marketing",
+  "Operações",
+  "Produtos",
+  "Recrutamento",
   "RH",
   "TI",
-  "Vendas",
-  "Operações",
-  "Jurídico",
-  "Diretoria",
-  "Presidência"
+  "Vendas"
 ];
 
 const cargosDisponiveis = [
-  "Diretor",
-  "Gerente",
-  "Coordenador",
   "Analista",
   "Assistente",
-  "Estagiário",
-  "Presidente",
-  "Vice-Presidente",
-  "Head",
   "Colaborador",
-  "Membro"
+  "Consultor",
+  "Coordenador",
+  "Diretor",
+  "Diretora",
+  "Estagiário",
+  "Gerente",
+  "Head",
+  "Membro",
+  "Presidente",
+  "Vice-Presidente"
 ];
 
 const cursosDisponiveis = [

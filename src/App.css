@@ -385,6 +385,21 @@ input:focus, select:focus {
   color: #db2777;
 }
 
+.role-head {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+}
+
+.role-consultant {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: #4f46e5;
+}
+
+.role-analyst {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
 .role-regular {
   background-color: rgba(16, 185, 129, 0.1);
   color: #059669;

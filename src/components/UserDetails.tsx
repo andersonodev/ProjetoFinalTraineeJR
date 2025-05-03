@@ -210,45 +210,40 @@ export function UserDetails({ user, open, onOpenChange, onUserUpdate, isAdmin = 
   // Lista de setores e cargos disponíveis para seleção
   const setoresDisponiveis = [
     "Administração",
+    "Comercial",
+    "Consultoria Empresarial",
+    "Departamento Pessoal",
+    "Desenvolvimento Organizacional",
+    "Diretoria",
+    "Engenharia",
     "Financeiro",
+    "Gestão de Pessoas",
+    "Gestão de Processos",
+    "Inovações",
+    "Jurídico",
     "Marketing",
+    "Operações",
+    "Produtos",
+    "Recrutamento",
     "RH",
     "TI",
-    "Vendas",
-    "Operações",
-    "Jurídico",
-    "Diretoria",
-    "Presidência"
+    "Vendas"
   ];
 
   const cargosDisponiveis = [
-    "Diretor",
-    "Gerente",
-    "Coordenador",
     "Analista",
     "Assistente",
-    "Estagiário",
-    "Presidente",
-    "Vice-Presidente",
-    "Head",
     "Colaborador",
-    "Membro"
-  ];
-
-  const cursosDisponiveis = [
-    "Administração",
-    "Ciência da Computação",
-    "Engenharia de Software",
-    "Economia",
-    "Engenharia",
-    "Direito",
-    "Contabilidade",
-    "Marketing",
-    "Recursos Humanos",
-    "Sistemas de Informação",
-    "Arquitetura",
-    "Design",
-    "Não se aplica"
+    "Consultor",
+    "Coordenador",
+    "Diretor",
+    "Diretora",
+    "Estagiário",
+    "Gerente",
+    "Head",
+    "Membro",
+    "Presidente",
+    "Vice-Presidente"
   ];
 
   const warningCount = user.advertencias || 0;

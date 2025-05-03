@@ -1,4 +1,4 @@
-export type UserRole = "Administrador" | "Presidente" | "Head" | "Colaborador" | "Membro" | "Diretor";
+export type UserRole = "Administrador" | "Presidente" | "Head" | "Colaborador" | "Membro" | "Diretor" | "Diretora" | "Consultor" | "Analista";
 export type UserStatus = "Ativo" | "Inativo" | "Banido";
 
 export interface User {

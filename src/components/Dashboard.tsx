@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import DashboardLayout from "@/components/DashboardLayout";
 import UsersTable from "@/components/UsersTable";
@@ -62,7 +62,22 @@ const Dashboard = () => {
   const totalWarnings = users.reduce((total, user) => total + (user.advertencias || 0), 0);
   const totalNotifications = users.reduce((total, user) => total + (user.notificacoes || 0), 0);
 
-  const setores = Array.from(new Set(users.map(user => user.setor).filter(Boolean))) as string[];
+  // Extrair lista de setores únicos dos usuários
+  const setores = useMemo(() => {
+    const setoresList = ["Administração", "Comercial", "Consultoria Empresarial", "Departamento Pessoal", 
+      "Desenvolvimento Organizacional", "Diretoria", "Engenharia", "Financeiro", 
+      "Gestão de Pessoas", "Gestão de Processos", "Inovações", "Jurídico", 
+      "Marketing", "Operações", "Produtos", "Recrutamento", "RH", "TI", "Vendas"];
+    
+    // Também inclui qualquer setor presente nos usuários que não esteja na lista padrão
+    users.forEach(user => {
+      if (user.setor && !setoresList.includes(user.setor)) {
+        setoresList.push(user.setor);
+      }
+    });
+    
+    return setoresList.sort();
+  }, [users]);
 
   const refreshUsers = () => {
     fetchUsers();

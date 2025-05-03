@@ -1,0 +1,420 @@
+/* ibmec jr soluções */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+span {
+  @apply text-[#2A4450] font-bold text-sm block mt-1;
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.menu-item {
+  @apply text-white hover:text-[#daf3f9];
+}
+
+.menu-item.active {
+  @apply bg-white/10 text-white font-medium;
+}
+
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%; /* Ajustado para um tom mais escuro para maior contraste */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%; /* Ajustado para maior visibilidade */
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 187 85% 39%; /* #0D9CB8 - Nova cor principal */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 187 70% 55%; /* Variação mais clara da cor principal */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 187 30% 85%; /* Variação bem mais clara para elementos muted */
+    --muted-foreground: 0 0% 40%; /* Ajustado para textos secundários */
+
+    --accent: 187 91% 39%; /* Similar à cor principal */
+    --accent-foreground: 0 0% 100%;
+
+  
+      --destructive: 0 0% 100%;
+      --destructive-foreground: 0 0% 20%;
+    
+
+    --border: 187 30% 85%; /* Tom mais claro para bordas */
+    --input: 187 30% 85%; /* Harmoniza com as bordas */
+    --ring: 187 85% 39%; /* Igual à cor principal para highlight */
+
+    --radius: 0.5rem;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 20%;
+
+    --banned: 0 84% 60%; /* Nova cor específica para banimento - #ef4444 */
+    --banned-foreground: 0 0% 100%;
+
+    --sidebar-background: 187 85% 39%; /* Cor principal para o sidebar */
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 187 85% 39%;
+    --sidebar-accent: 187 75% 45%; /* Variação mais clara para hover */
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 187 85% 30%; /* Tom mais escuro para bordas */
+    --sidebar-ring: 187 85% 39%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 187 85% 39%; /* Mantém a identidade visual no modo escuro */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 187 70% 30%; /* Variação mais escura para o tema dark */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 187 70% 30%;
+    --accent-foreground: 210 40% 98%;
+
+  
+    --destructive: 0 0% 100%;
+    --destructive-foreground: 0 0% 20%;
+
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 187 85% 39%;
+
+    --banned: 0 70% 42%; /* Versão dark para cor de banimento */
+    --banned-foreground: 210 40% 98%;
+    
+    --sidebar-background: 187 85% 39%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 187 85% 39%;
+    --sidebar-accent: 187 75% 45%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 187 85% 30%;
+    --sidebar-ring: 187 85% 39%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-gray-50 text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .stat-card {
+    @apply bg-white rounded-lg shadow-sm p-6 flex items-center gap-4;
+  }
+  
+  .stat-card-icon {
+    @apply p-3 rounded-full;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-white py-2 px-4 rounded-md flex items-center justify-center gap-2 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-white py-2 px-4 rounded-md flex items-center gap-2 transition-colors;
+  }
+  
+  .btn-outline {
+    @apply border border-gray-300 hover:bg-gray-50 py-2 px-4 rounded-md flex items-center gap-2 transition-colors;
+  }
+  
+  .btn-success {
+    @apply bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md flex items-center gap-2 transition-colors;
+  }
+  
+  .btn-warning {
+    @apply bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-md flex items-center gap-2 transition-colors;
+  }
+  
+  .btn-danger {
+    @apply bg-destructive hover:bg-destructive/90 text-white py-2 px-4 rounded-md flex items-center gap-2 transition-colors;
+  }
+
+  .btn-banned {
+    @apply bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md flex items-center gap-2 transition-colors;
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 rounded-md px-3 py-2 text-sidebar-foreground hover:bg-sidebar-accent transition-colors;
+    color: inherit !important;
+  }
+
+  .sidebar-link.active {
+    @apply bg-sidebar-accent font-medium;
+  }
+
+  
+
+  /* Data Tables */
+  .data-table-container {
+    @apply border rounded-lg overflow-hidden bg-white;
+  }
+
+  .data-table {
+    @apply w-full;
+  }
+
+  .data-table-header {
+    @apply bg-gray-50 text-left border-b;
+  }
+
+  .data-table-header th {
+    @apply px-4 py-3 font-medium text-gray-700;
+  }
+
+  .data-table-body tr {
+    @apply border-b last:border-b-0 hover:bg-gray-50/50 transition-colors;
+  }
+
+  .data-table-body td {
+    @apply px-4 py-3;
+  }
+
+  /* Cards */
+  .dashboard-card {
+    @apply bg-white border rounded-lg p-5 shadow-sm hover:shadow-md transition-all;
+  }
+
+  .dashboard-card-title {
+    @apply text-lg font-medium text-gray-800 mb-2;
+  }
+
+  .dashboard-card-subtitle {
+    @apply text-sm text-gray-500 mb-4;
+  }
+
+  /* Forms */
+  .form-control {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .form-helper {
+    @apply text-xs text-gray-500 mt-1;
+  }
+
+  /* Badges */
+  .badge-primary {
+    @apply bg-primary/10 text-primary px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-secondary {
+    @apply bg-gray-100 text-gray-700 px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-700 px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-warning {
+    @apply bg-amber-100 text-amber-700 px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-700 px-2 py-1 text-xs font-medium rounded-full;
+  }
+
+  .badge-banned {
+    @apply bg-red-500 text-white px-2 py-1 text-xs font-medium rounded-full;
+  }
+}
+
+/* Custom scrollbar para o sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Breakpoints para responsividade */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .grid-cols-3, 
+  .grid-cols-4 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .sidebar-open {
+    overflow: hidden;
+  }
+  
+  /* Garantir espaço para o botão de menu */
+  .mobile-padded-content {
+    padding-top: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glassmorphism */
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass {
+  background: rgba(20, 20, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card styles */
+.hover-card {
+  transition: all 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Sidebar menu animations */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+/* Transições para hover */
+.hover-translate {
+  transition: transform 0.2s ease;
+}
+
+.hover-translate:hover {
+  transform: translateY(-2px);
+}

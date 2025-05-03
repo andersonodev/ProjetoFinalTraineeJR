@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+}
+
+/* Container Principal */
+.pag-definir {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5vw 2vw;
+    gap: 2vh;
+}
+
+/* Logo no topo */
+.logo-ibmecjr-pagesc {
+    width: 130px;
+    height: auto;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.1));
+}
+
+/* Formulário */
+.form-definir {
+    background-color: #ffffff;
+    padding: 2.5rem 2rem;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: left;
+}
+
+/* Título */
+.form-definir h1 {
+    font-size: 1.8rem;
+    color: #014d52;
+    margin-bottom: 0.6rem;
+}
+
+.form-definir hr {
+    width: 60px;
+    height: 4px;
+    background-color: #26a69a;
+    border: none;
+    margin-bottom: 1.8rem;
+    border-radius: 4px;
+}
+
+/* Campos */
+.form-definir label {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-top: 1rem;
+    display: block;
+    color: #333;
+}
+
+.form-definir input {
+    width: 100%;
+    padding: 10px 14px;
+    margin-top: 0.4rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.form-definir input:focus {
+    box-shadow: 0 0 0 2px #26a69a;
+}
+
+/* Dica abaixo dos inputs */
+span {
+    font-size: 0.8rem;
+    color: red;
+    display: block;
+    margin-top: 0.2rem;
+}
+
+/* Botões */
+.botao-definir {
+    width: 100%;
+    padding: 12px;
+    background-color: #26a69a;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.botao-definir:hover {
+    background-color: #1e9088;
+    color: rgba(0, 0, 0, 0.753);
+}
+
+.botao-definir:disabled {
+    background-color: #b2dfdb;
+    cursor: not-allowed;
+}

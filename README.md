@@ -18,7 +18,7 @@ A Ibmec Jr enfrenta desafios na organização e visualização de dados dos memb
 
 Dar continuidade ao software iniciado pelo primeiro grupo, focando na colaboração, aprendizado mútuo e no desenvolvimento de novas funcionalidades, respeitando os diferentes níveis de conhecimento técnico dos integrantes.
 
-Repositório base do grupo anterior:  
+Repositório base do grupo anterior:
 🔗 [Projeto Inicial](https://github.com/DanielJT20/ProjetoFinalTraineeJR/tree/primeira)
 
 ## ✅ Requisitos do Projeto

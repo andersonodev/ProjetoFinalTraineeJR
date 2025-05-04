@@ -2,20 +2,66 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Regra para documentos de usuário
-    match /users/{userId} {
-      // Usuário só pode ver os próprios dados (e admins podem ver todos)
-      allow read: if request.auth != null && 
-                  (request.auth.uid == userId || 
-                   get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true);
-      
-      // Apenas admins ou o próprio usuário podem modificar os dados
-      allow write: if request.auth != null && 
-                   (request.auth.uid == userId || 
-                    get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true);
+    // Função auxiliar para verificar se o usuário é administrador
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
     
-    // Outras regras...
+    // Função auxiliar para verificar se é power user
+    function isPowerUser() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isPowerUser == true;
+    }
+    
+    // Função para verificar se o usuário tem permissões avançadas
+    function hasAdvancedPermissions() {
+      return isAdmin() || isPowerUser();
+    }
+    
+    // Regras para documentos de usuário com suporte a imagens base64
+    match /users/{userId} {
+      // Usuário pode ver os próprios dados (e admin/power users podem ver todos)
+      allow read: if request.auth != null && 
+                  (request.auth.uid == userId || hasAdvancedPermissions());
+      
+      // Admin pode alterar qualquer usuário, usuários comuns só podem editar a si mesmos
+      // Permitir documentos maiores para acomodar imagens base64 (até 1MB)
+      allow create, update: if request.auth != null && 
+                   (request.auth.uid == userId || hasAdvancedPermissions()) &&
+                   request.resource.size < 1048576; // Limite de 1MB por documento
+      
+      allow delete: if request.auth != null && isAdmin();
+    }
+    
+    // Logs de ações (notificações, advertências, banimentos)
+    match /actionLogs/{logId} {
+      allow read: if request.auth != null && hasAdvancedPermissions();
+      // Permitir que qualquer usuário AUTENTICADO escreva logs (incluindo admins)
+      allow write: if request.auth != null;
+    }
+    
+    // Registros de alterações de status
+    match /statusLogs/{logId} {
+      allow read: if request.auth != null && hasAdvancedPermissions();
+      allow write: if request.auth != null;
+    }
+    
+    // Notificações
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && hasAdvancedPermissions();
+    }
+    
+    // Usuários excluídos
+    match /deletedUsers/{userId} {
+      allow read, write: if request.auth != null && isAdmin();
+    }
+    
+    // Regra wildcard para garantir acesso de administradores a todas as coleções
+    match /{allCollections}/{allDocuments} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
   }
 }

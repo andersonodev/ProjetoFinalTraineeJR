@@ -157,4 +157,3 @@ Este projeto valoriza o trabalho em equipe. Caso algum membro possua menor conhe
 5. Abra um Pull Request.
 
 ## IBEEEEEEEE MECCCCCCCCC 💙💙💙💙💙
-

@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { getFirestore, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from 'firebase/storage';
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -17,16 +18,17 @@ const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app); // Inicializar o Storage
 
-export { auth, db };
+export { auth, db, storage };
 export default app;
 
-// Função para salvar imagem como base64 diretamente no Firestore
+// Função para salvar imagem no Firebase Storage e atualizar o perfil do usuário
 export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: string): Promise<string> => {
   try {
     console.log(`Iniciando processamento de imagem para usuário: ${userId}`);
     
-    // Limite de tamanho para evitar problemas com o tamanho do documento no Firestore (max 1MB)
+    // Limite de tamanho para evitar problemas
     const sizeInBytes = Math.round((imageDataUrl.length * 3) / 4);
     const maxSizeBytes = 800000; // ~800KB para estar seguro
     
@@ -34,22 +36,66 @@ export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: str
       throw new Error(`Imagem muito grande (${Math.round(sizeInBytes/1024)}KB). Máximo permitido: ${Math.round(maxSizeBytes/1024)}KB`);
     }
     
-    // Gerar identificador único da imagem
+    // Verificar se é um ID temporário (usado durante cadastro de novo usuário)
+    if (userId.startsWith('temp_')) {
+      console.log('ID temporário detectado, retornando imagem processada localmente');
+      return imageDataUrl; // Para IDs temporários, só retornamos a imagem processada
+    }
+    
+    // Gerar um caminho único para a imagem no Storage
     const timestamp = new Date().getTime();
-    const imageId = `${userId}_${timestamp}`;
+    const imagePath = `profile_images/${userId}/${timestamp}.jpg`;
+    const storageRef = ref(storage, imagePath);
     
-    // Referência do usuário no Firestore
-    const userRef = doc(db, "users", userId);
+    // Remover o prefixo da string base64 se existir
+    const base64WithoutPrefix = imageDataUrl.includes('data:') 
+      ? imageDataUrl.split(',')[1] 
+      : imageDataUrl;
     
-    // Atualizar o avatar do usuário
-    await updateDoc(userRef, {
-      avatarUrl: imageDataUrl
+    // Fazer upload da imagem para o Storage
+    await uploadString(storageRef, base64WithoutPrefix, 'base64', {
+      contentType: 'image/jpeg'
     });
     
-    console.log('Imagem salva com sucesso no Firestore como base64');
-    return imageDataUrl;
+    // Obter URL de download da imagem
+    const downloadURL = await getDownloadURL(storageRef);
+    
+    // Atualizar o documento do usuário com a URL da imagem
+    const userRef = doc(db, "users", userId);
+    
+    // Verificar se o usuário existe
+    const docSnap = await getDoc(userRef);
+    
+    if (!docSnap.exists()) {
+      throw new Error(`Usuário com ID ${userId} não encontrado`);
+    }
+    
+    // Atualizar o documento do usuário com a URL da imagem
+    await updateDoc(userRef, {
+      avatarUrl: downloadURL,
+      avatarStoragePath: imagePath,
+      avatarUpdatedAt: serverTimestamp()
+    });
+    
+    console.log(`Imagem salva com sucesso para usuário ${userId} no Storage`);
+    
+    return downloadURL;
   } catch (error) {
-    console.error('Erro ao salvar imagem base64:', error);
+    console.error("Erro ao salvar imagem:", error);
+    throw error;
+  }
+};
+
+// Função para excluir uma imagem do Storage
+export const deleteProfileImage = async (storagePath: string): Promise<void> => {
+  if (!storagePath) return;
+  
+  try {
+    const imageRef = ref(storage, storagePath);
+    await deleteObject(imageRef);
+    console.log(`Imagem excluída com sucesso: ${storagePath}`);
+  } catch (error) {
+    console.error("Erro ao excluir imagem:", error);
     throw error;
   }
 };

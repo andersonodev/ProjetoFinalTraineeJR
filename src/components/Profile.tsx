@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { doc, updateDoc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "../lib/firebase";
 import { 
   Card, 
@@ -103,7 +103,7 @@ const Profile = () => {
     const userRef = doc(db, "users", currentUser.uid);
     const unsubscribe = onSnapshot(userRef, (doc) => {
       if (doc.exists() && !isSubmitting) {
-        const updatedUserData = { id: doc.id, ...doc.data() } as any; // Renamed to avoid conflict
+        const updatedUserData = { id: doc.id, ...doc.data() } as any;
         // We don't update the form here to prevent conflicts during editing
         console.log("Received updated user data:", updatedUserData);
       }
@@ -119,11 +119,10 @@ const Profile = () => {
     try {
       const userRef = doc(db, "users", userData.id);
       
-      // Atualiza o usuário com a nova URL (que já está no campo avatarUrl)
       await updateDoc(userRef, {
         ...values,
         avatarUrl: avatarUrl, // Ensure avatarUrl is explicitly included if changed
-        updatedAt: new Date(),
+        updatedAt: serverTimestamp(),
       });
       
       setShowSuccessAnimation(true);
@@ -153,8 +152,8 @@ const Profile = () => {
       : (userData.createdAt as any)?.toDate 
         ? (userData.createdAt as any).toDate() 
         : new Date(userData.createdAt);
-
-    if (isNaN(createdDate.getTime())) return "Data inválida"; // Check if date is valid
+    
+    if (isNaN(createdDate.getTime())) return "Data inválida";
 
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - createdDate.getTime());
@@ -183,7 +182,7 @@ const Profile = () => {
 
   return (
     <DashboardLayout>
-      <div className="w-full max-w-5xl mx-auto pb-6 px-4 sm:px-6">
+      <div className="w-full max-w-5xl mx-auto pb-10 px-4 sm:px-6 pt-2 sm:pt-0">
         {/* Layout Responsivo - Mobile First */}
         <div className="space-y-6">
           {/* Perfil e Stats Card - Mais adaptado para mobile */}
@@ -250,7 +249,7 @@ const Profile = () => {
                 <p className="text-xs sm:text-sm md:text-base text-blue-100 mb-2">{userData.email}</p>
                 
                 <div className="mt-1 bg-white/20 px-3 sm:px-4 py-0.5 sm:py-1 rounded-full text-white text-xs sm:text-sm">
-                  {userData.role || userData.role || "Membro"} {/* Display cargo first */}
+                  {userData.role || userData.role || "Membro"}
                 </div>
               </div>
               
@@ -313,7 +312,7 @@ const Profile = () => {
                     <User className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Seu Perfil
                   </CardTitle>
-                  <Badge variant="outline" className="text-blue-600 border-blue-200 bg-blue-50 text-[10px] sm:text-xs">
+                  <Badge variant="outline" className="text-blue-600 border-blue-200 bg-blue-50 text-[10px] sm:text-xs hidden sm:flex">
                     ID: {userData.id.substring(0, 6)}...
                   </Badge>
                 </div>
@@ -379,7 +378,7 @@ const Profile = () => {
                     </button>
                   </div>
                 </div>
-                
+              
                 {/* Conteúdo das abas - usando renderização condicional explícita */}
                 <div className="p-4 sm:p-6 pt-5">
                   <AnimatePresence mode="wait">
@@ -457,7 +456,7 @@ const Profile = () => {
                                     <FormControl>
                                       <Input 
                                         {...field} 
-                                        className="h-10 transition-all duration-200 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                                        className="h-10 transition-all duration-200 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm" 
                                       />
                                     </FormControl>
                                     <FormMessage className="text-xs" />
@@ -530,7 +529,7 @@ const Profile = () => {
                                   <Briefcase className="h-3.5 w-3.5" /> Cargo
                                 </Label>
                                 <div className="p-2 bg-gray-50 border rounded-md text-sm">
-                                  {userData.role || userData.role || "Não informado"} {/* Display cargo first */}
+                                  {userData.role || userData.role || "Não informado"}
                                 </div>
                                 <p className="text-[10px] sm:text-xs text-gray-500">
                                   Definido pelo administrador
@@ -696,26 +695,21 @@ const StatItem: React.FC<{
   value: React.ReactNode; 
   valueClass?: string; 
   isMobile?: boolean; 
-}> = ({ icon, label, value, valueClass = "", isMobile = false }) => (
+}> = ({ icon, label, value, valueClass = "" }) => (
   <motion.div 
+    className="p-2 sm:p-3 border rounded-lg flex flex-col items-center justify-center gap-1 bg-white shadow-sm hover:shadow-md transition-shadow"
     whileHover={{ y: -2 }}
-    transition={{ type: "spring", stiffness: 400 }}
-    className="flex flex-col items-center justify-center p-1.5 sm:p-2 md:p-3 bg-gradient-to-b from-white to-gray-50/80 rounded-lg border border-gray-100 shadow-sm hover:shadow-md"
+    transition={{ duration: 0.2 }}
   >
-    <div className="flex items-center gap-0.5 sm:gap-1.5 text-[8px] sm:text-xs text-gray-600 mb-0.5 sm:mb-1.5">
-      <div className="p-0.5 sm:p-1 bg-gray-100 rounded-full">
-        {icon}
-      </div>
-      <span>{label}</span>
+    <div className="text-gray-500 text-[10px] sm:text-xs mb-0.5 flex items-center gap-1">
+      {icon}
+      {label}
     </div>
-    <motion.div 
-      className={`font-medium ${valueClass || (isMobile ? "text-[10px]" : "text-sm")} text-center`}
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 300, delay: 0.1 }}
-    >
-      {value}
-    </motion.div>
+    {typeof value === "number" ? (
+      <div className={`font-semibold text-lg sm:text-xl ${valueClass}`}>{value}</div>
+    ) : (
+      <div>{value}</div>
+    )}
   </motion.div>
 );
 

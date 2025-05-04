@@ -7,7 +7,6 @@ import Login from "./components/Login";
 import CreateUser from "./components/CreateUser";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
-import Users from "./components/Users";
 import EsqueceuSenhaPage from "./components/EsqueceuSenha";
 import DefinirSenhaPage from "./components/DefinirSenha";
 
@@ -42,12 +41,8 @@ const App = () => (
           <Profile />
         </ProtectedRoute>
       } />
-      
-      <Route path="/usuarios" element={
-        <ProtectedRoute allowedRoles={["admin", "powerUser"]}>
-          <Users />
-        </ProtectedRoute>
-      } />
+  
+
       
       <Route path="*" element={<NotFound />} />
     </Routes>

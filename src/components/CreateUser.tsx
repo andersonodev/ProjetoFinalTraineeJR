@@ -263,7 +263,7 @@ const CreateUser = () => {
         await deleteApp(secondaryApp).catch(console.error);
         
         toast.success("Usuário criado com sucesso e email de definição de senha enviado!");
-        navigate("/usuarios");
+        navigate("/dashboard"); // Redireciona para o Dashboard
         
       } catch (error: any) {
         console.error("Erro ao criar usuário:", error);

@@ -15,6 +15,7 @@ import { User } from "@/types/user";
 import { Ban, Bell, ShieldAlert, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { serverTimestamp, addDoc, collection } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { db } from "../lib/firebase";
 
 interface JustificativaFormProps {
@@ -29,12 +30,48 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
   const [motivo, setMotivo] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   
+  // Definições de configuração para cada tipo de ação
+  const actionConfig = {
+    notificacao: {
+      title: "Enviar Notificação",
+      description: "Envie uma notificação para este usuário explicando o motivo.",
+      icon: <Bell className="h-5 w-5 text-blue-500" />,
+      buttonText: "Enviar Notificação",
+      buttonClass: "bg-blue-500 hover:bg-blue-600",
+    },
+    advertencia: {
+      title: "Registrar Advertência",
+      description: "Registre uma advertência formal para este usuário explicando o motivo.",
+      icon: <ShieldAlert className="h-5 w-5 text-amber-500" />,
+      buttonText: "Registrar Advertência",
+      buttonClass: "bg-amber-600 hover:bg-amber-700",
+    },
+    banimento: {
+      title: user.status === "Ativo" ? "Banir Usuário" : "Reativar Usuário",
+      description: user.status === "Ativo" 
+        ? "Isso irá impedir o acesso deste usuário ao sistema." 
+        : "Isso irá restaurar o acesso deste usuário ao sistema.",
+      icon: <Ban className="h-5 w-5 text-amber-500" />,
+      buttonText: user.status === "Ativo" ? "Confirmar Banimento" : "Confirmar Reativação",
+      buttonClass: user.status === "Ativo" ? "bg-amber-600 hover:bg-amber-700" : "bg-green-500 hover:bg-green-600",
+    },
+  };
+  
+  // Configuração para a ação atual
+  const config = actionConfig[actionType];
+  
   // Limpar o motivo quando o formulário abre/fecha
   useEffect(() => {
     if (open === false) {
       setMotivo("");
     }
   }, [open]);
+  
+  // Obtém as iniciais do nome para o avatar
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    return name.split(" ").map(n => n.charAt(0).toUpperCase()).join("").substring(0, 2);
+  };
   
   const handleSubmit = async () => {
     // Validação mais rigorosa
@@ -46,28 +83,53 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
     setIsSubmitting(true);
     
     try {
-      // Adicionando log de diagnóstico
+      // Adicionar log de diagnóstico
       console.log(`Processando ação ${actionType} para usuário ${user.id}`, {
         tipoAcao: actionType,
         advertenciasAtuais: user.advertencias || 0,
         statusAtual: user.status
       });
       
-      // Registrar a tentativa de ação no Firebase - para fins de auditoria
-      await addDoc(collection(db, "actionLogs"), {
-        userId: user.id,
-        userName: user.nome,
-        actionType: actionType,
-        motivo: motivo,
-        timestamp: serverTimestamp(),
-        status: "initiated"
-      });
+      // Verificar se o usuário está autenticado
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
       
-      // Chamar o callback de confirmação que aplicará a ação no usuário
-      await onConfirm(motivo);
+      if (!currentUser) {
+        toast.error("Você precisa estar autenticado para realizar esta ação");
+        setIsSubmitting(false);
+        return;
+      }
       
-      // Limpar o formulário
-      setMotivo("");
+      console.log("Usuário atual:", currentUser.uid, currentUser.email);
+      
+      try {
+        // Registrar a tentativa de ação no Firebase - para fins de auditoria
+        await addDoc(collection(db, "actionLogs"), {
+          userId: user.id,
+          userName: user.nome,
+          actionType: actionType,
+          motivo: motivo,
+          timestamp: serverTimestamp(),
+          executedBy: {
+            uid: currentUser.uid,
+            email: currentUser.email
+          },
+          status: "initiated"
+        });
+        
+        // Chamar o callback de confirmação que aplicará a ação no usuário
+        await onConfirm(motivo);
+        
+        // Limpar o formulário
+        setMotivo("");
+      } catch (innerError) {
+        console.error("Erro específico ao registrar ação:", innerError);
+        if (innerError instanceof Error) {
+          toast.error(`Erro de permissão: ${innerError.message}. Verifique se você tem permissões adequadas.`);
+        } else {
+          toast.error("Erro de permissão desconhecido. Verifique se você tem permissões adequadas.");
+        }
+      }
     } catch (error) {
       console.error("Erro ao processar ação:", error);
       toast.error("Ocorreu um erro ao processar a ação. Tente novamente.");
@@ -75,41 +137,6 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
       setIsSubmitting(false);
     }
   };
-  
-  // Obtém as iniciais do nome para o avatar
-  const getInitials = (name: string) => {
-    if (!name) return "U";
-    return name.split(" ").map(n => n.charAt(0).toUpperCase()).join("").substring(0, 2);
-  };
-  
-  // Configurações com base no tipo de ação
-  const actionConfig = {
-    notificacao: {
-      title: "Enviar Notificação",
-      description: "Envie uma notificação para este usuário explicando o motivo.",
-      icon: <Bell className="h-5 w-5 text-blue-500" />,
-      buttonText: "Enviar Notificação",
-      buttonClass: "bg-blue-500 hover:bg-blue-600",
-    },
-    advertencia: {
-      title: "Adicionar Advertência",
-      description: "Adicione uma advertência formal para este usuário explicando o motivo.",
-      icon: <ShieldAlert className="h-5 w-5 text-amber-500" />,
-      buttonText: "Registrar Advertência",
-      buttonClass: "bg-amber-500 hover:bg-amber-600",
-    },
-    banimento: {
-      title: user.status === "Ativo" ? "Banir Usuário" : "Reativar Usuário",
-      description: user.status === "Ativo" 
-        ? "Desative o acesso deste usuário ao sistema."
-        : "Reative o acesso deste usuário ao sistema.",
-      icon: <Ban className="h-5 w-5 text-amber-500" />,
-      buttonText: user.status === "Ativo" ? "Confirmar Banimento" : "Confirmar Reativação",
-      buttonClass: user.status === "Ativo" ? "bg-amber-600 hover:bg-amber-700" : "bg-green-500 hover:bg-green-600",
-    },
-  };
-  
-  const config = actionConfig[actionType];
 
   return (
     <Dialog open={open} onOpenChange={(newState) => {

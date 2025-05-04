@@ -178,7 +178,6 @@ const Sidebar = ({ isMobile = false, onCloseMobile }: SidebarProps) => {
       title: "Principal",
       items: [
         { to: "/dashboard", icon: Home, label: "Dashboard" },
-        { to: "/users", icon: Users, label: "Usuários", powerUserOnly: true },
       ]
     },
     {
@@ -242,7 +241,7 @@ const Sidebar = ({ isMobile = false, onCloseMobile }: SidebarProps) => {
                 </Avatar>
                 <div className="space-y-0.5">
                   <h3 className="font-medium text-white text-sm">{userData?.nome || "Usuário"}</h3>
-                  <p className="text-xs text-white/90">{userData?.cargo || userData?.role || "Membro"}</p>
+                  <p className="text-xs text-white/90">{userData?.role || userData?.role || "Membro"}</p>
                   <p className="text-xs text-white/70">{userData?.setor || "Sem setor"}</p>
                 </div>
               </div>

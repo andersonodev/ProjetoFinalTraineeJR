@@ -1,40 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { confirmPasswordReset } from 'firebase/auth';
-import { auth } from '../firebase'; // Certifique-se de importar sua instância do Firebase
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/DefinirSenha.css';
 
 function DefinirSenhaPage() {
-  const [searchParams] = useSearchParams();
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [erro, setErro] = useState('');
-  const [sucesso, setSucesso] = useState(false);
   const navigate = useNavigate();
 
-  const oobCode = searchParams.get('oobCode');
   const senhaValida = senha.length >= 6 && senha === confirmarSenha;
 
-  const handleDefinirSenha = async () => {
+  const handleDefinirSenha = () => {
     if (!senhaValida) {
-      setErro('As senhas devem ter pelo menos 6 caracteres e ser iguais.');
+      alert('As senhas devem ter pelo menos 6 caracteres e ser iguais.');
       return;
     }
 
-    try {
-      await confirmPasswordReset(auth, oobCode, senha);
-      setSucesso(true);
-      setErro('');
-      setTimeout(() => navigate('/'), 3000);
-    } catch (error) {
-      console.error(error);
-      setErro('Erro ao redefinir a senha. O link pode ter expirado.');
-    }
+    alert('Senha alterada com sucesso!');
+    navigate('/');
   };
 
   return (
     <div className="pag-definir">
       <img src="./logoibmecjr.png" alt="Logo Ibmec Jr" className="logo-ibmecjr-pagesc" />
+
       <div className="form-definir">
         <h1>Definir Nova Senha <hr /></h1>
 
@@ -54,8 +42,9 @@ function DefinirSenhaPage() {
           onChange={(e) => setConfirmarSenha(e.target.value)}
         />
 
-        {erro && <span style={{ color: 'red' }}>{erro}</span>}
-        {sucesso && <span style={{ color: 'green' }}>Senha redefinida com sucesso!</span>}
+        {!senhaValida && confirmarSenha.length > 0 && (
+          <span style={{ color: 'red' }}>As senhas não coincidem ou são muito curtas.</span>
+        )}
 
         <button className="botao-definir" onClick={handleDefinirSenha} disabled={!senhaValida}>
           Confirmar Nova Senha

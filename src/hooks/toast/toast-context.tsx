@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { ToasterToast, State, Toast } from "./types";
 import { createReducer } from "./toast-reducer";
@@ -21,8 +20,9 @@ const initialState: State = { toasts: [] };
 // Provider component
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   // Create a ref to store the dispatch function
-  const dispatchRef = React.useRef<(action: any) => void>((action) => {
-    state[1](action);
+  const dispatchRef = React.useRef<(action: any) => void>(() => {
+    // Removendo a chamada direta que causava o erro
+    // Não chamamos state[1] (dispatch) diretamente aqui
   });
   
   // Create the reducer with access to dispatch
@@ -30,8 +30,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     return createReducer((action) => dispatchRef.current(action));
   }, []);
   
-  const state = React.useReducer(reducer, initialState);
-  const [stateValue, stateDispatch] = state;
+  const [stateValue, stateDispatch] = React.useReducer(reducer, initialState);
   
   // Update dispatch ref when stateDispatch changes
   React.useEffect(() => {

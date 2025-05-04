@@ -45,15 +45,25 @@ import {
   Sparkles
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+// Corrigir a importação do DashboardLayout - importar diretamente
 import DashboardLayout from "@/components/DashboardLayout";
 import { AvatarUpload } from "@/components/AvatarUpload";
 import { Progress } from "@/components/ui/progress";
 
-// Firebase imports
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { setDoc, doc, serverTimestamp, getDoc } from "firebase/firestore";
-import { auth, db } from "../lib/firebase";
-import uploadProfileImage from "@/lib/firebase";
+// Firebase imports - corrigidos e consolidados
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  sendPasswordResetEmail 
+} from "firebase/auth";
+import { getApp, initializeApp, deleteApp  } from "firebase/app";
+import { setDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
+import { useAuth } from "@/contexts/AuthContext";
+import { saveProfileImageAsBase64 } from "@/lib/imageUtils";
+
+
 
 // Validation schema
 const formSchema = z.object({
@@ -98,8 +108,6 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const setoresDisponiveis = [
-  "Administração",
-  "Comercial",
   "Consultoria Empresarial",
   "Departamento Pessoal",
   "Desenvolvimento Organizacional",
@@ -111,43 +119,26 @@ const setoresDisponiveis = [
   "Inovações",
   "Jurídico",
   "Marketing",
-  "Operações",
   "Produtos",
   "Recrutamento",
-  "RH",
-  "TI",
   "Vendas"
 ];
 
 const cargosDisponiveis = [
   "Analista",
-  "Assistente",
-  "Colaborador",
+  "Trainee",
   "Consultor",
-  "Coordenador",
   "Diretor",
   "Diretora",
-  "Estagiário",
-  "Gerente",
   "Head",
-  "Membro",
-  "Presidente",
-  "Vice-Presidente"
+  "Presidente Executivo",
+
 ];
 
 const cursosDisponiveis = [
   "Administração",
   "Ciência da Computação",
   "Engenharia de Software",
-  "Economia",
-  "Engenharia",
-  "Direito",
-  "Contabilidade",
-  "Marketing",
-  "Recursos Humanos",
-  "Sistemas de Informação",
-  "Arquitetura",
-  "Design",
   "Não se aplica"
 ];
 
@@ -184,6 +175,9 @@ const CreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
+  
+  // Obter informações do usuário atual (administrador)
+  const { currentUser, userData } = useAuth();
   
   // Inicializa o formulário com React Hook Form
   const methods = useForm<FormData>({
@@ -233,35 +227,55 @@ const CreateUser = () => {
         idade: idadeNum,
         advertencias: 0,
         notificacoes: 0,
+        // Incluir avatarUrl diretamente se estiver disponível
+        ...(avatarUrl ? { avatarUrl } : {})
       };
-      
-      // Criar o usuário no Firebase Auth primeiro
-      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.senha);
-      const user = userCredential.user;
-      
-      // Se tivermos um avatar URL (já como base64), incluí-lo diretamente
-      if (avatarUrl) {
-        userData.avatarUrl = avatarUrl;
-      }
       
       // Remover o campo confirmarSenha antes de salvar
       delete (userData as any).confirmarSenha;
-
-      await setDoc(doc(db, "users", user.uid), {
-        ...userData,
-        id: user.uid,
-        createdAt: serverTimestamp(),
-      });
-
-      toast.success("Usuário criado com sucesso!");
-      navigate("/usuarios");
-    } catch (error: any) {
-      console.error("Erro ao criar usuário:", error);
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("Este email já está em uso. Tente outro.");
-      } else {
-        toast.error("Erro ao criar usuário. Tente novamente.");
+      
+      try {
+        const secondaryApp = initializeApp(getApp().options, 'SecondaryApp');
+        const secondaryAuth = getAuth(secondaryApp);
+      
+        const tempPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).toUpperCase().slice(-4) + "!1";
+      
+        const userCredential = await createUserWithEmailAndPassword(
+          secondaryAuth, 
+          data.email, 
+          tempPassword
+        );
+        
+        const user = userCredential.user;
+        
+        // Salvar os dados do usuário no Firestore diretamente com a imagem base64
+        await setDoc(doc(db, "users", user.uid), {
+          ...userData,
+          id: user.uid,
+          createdAt: serverTimestamp()
+        });
+        
+        // Enviar email de redefinição de senha para o novo usuário
+        await sendPasswordResetEmail(secondaryAuth, data.email);
+        
+        // Deslogar da instância secundária e limpá-la para evitar interferências
+        await signOut(secondaryAuth);
+        await deleteApp(secondaryApp).catch(console.error);
+        
+        toast.success("Usuário criado com sucesso e email de definição de senha enviado!");
+        navigate("/usuarios");
+        
+      } catch (error: any) {
+        console.error("Erro ao criar usuário:", error);
+        if (error.code === "auth/email-already-in-use") {
+          toast.error("Este email já está em uso. Tente outro.");
+        } else {
+          toast.error(`Erro ao criar usuário: ${error.message || "Erro desconhecido"}`);
+        }
       }
+    } catch (error: any) {
+      console.error("Erro ao processar formulário:", error);
+      toast.error("Erro ao processar dados do formulário.");
     } finally {
       setIsLoading(false);
     }
@@ -313,8 +327,8 @@ const CreateUser = () => {
               <UserIcon className="h-5 w-5" />
               <h2>Informações Pessoais</h2>
             </div>
-            
             <div className="flex flex-col items-center mb-6">
+              {/* Ensure watchedNome is defined using watch from react-hook-form */}
               <AvatarUpload 
                 currentAvatar={avatarUrl} 
                 onAvatarChange={handleAvatarChange} 
@@ -325,7 +339,6 @@ const CreateUser = () => {
                 Adicione uma foto de perfil (opcional)
               </p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={methods.control}
@@ -340,7 +353,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="email"
@@ -354,7 +366,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="telefone"
@@ -368,7 +379,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="idade"
@@ -382,7 +392,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="matricula"
@@ -399,7 +408,6 @@ const CreateUser = () => {
             </div>
           </div>
         );
-      
       case 1:
         return (
           <div className="space-y-6">
@@ -407,7 +415,6 @@ const CreateUser = () => {
               <Building className="h-5 w-5" />
               <h2>Informações Profissionais</h2>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={methods.control}
@@ -435,7 +442,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="setor"
@@ -462,7 +468,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="curso"
@@ -489,7 +494,6 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <FormField
                 control={methods.control}
                 name="dataEntradaEmpresa"
@@ -504,7 +508,6 @@ const CreateUser = () => {
                 )}
               />
             </div>
-            
             <FormField
               control={methods.control}
               name="observacoes"
@@ -524,7 +527,6 @@ const CreateUser = () => {
             />
           </div>
         );
-      
       case 2:
         return (
           <div className="space-y-6">
@@ -532,7 +534,6 @@ const CreateUser = () => {
               <Shield className="h-5 w-5" />
               <h2>Configurações de Conta</h2>
             </div>
-            
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
@@ -548,7 +549,6 @@ const CreateUser = () => {
                     </FormItem>
                   )}
                 />
-                
                 <FormField
                   control={methods.control}
                   name="confirmarSenha"
@@ -567,7 +567,6 @@ const CreateUser = () => {
                   )}
                 />
               </div>
-                
               <FormField
                 control={methods.control}
                 name="status"
@@ -613,10 +612,8 @@ const CreateUser = () => {
                   </FormItem>
                 )}
               />
-              
               <div className="space-y-4">
                 <h3 className="text-base font-medium">Nível de Permissão</h3>
-                
                 <FormField
                   control={methods.control}
                   name="isAdmin"
@@ -646,7 +643,6 @@ const CreateUser = () => {
                     </FormItem>
                   )}
                 />
-                
                 <FormField
                   control={methods.control}
                   name="isPowerUser"
@@ -677,7 +673,6 @@ const CreateUser = () => {
                     </FormItem>
                   )}
                 />
-                
                 <div className={`p-4 bg-white rounded-md border shadow-sm ${!watchedIsPowerUser && !watchedIsAdmin ? "ring-2 ring-primary/20" : ""}`}>
                   <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-0.5">
@@ -697,7 +692,6 @@ const CreateUser = () => {
                   </div>
                 </div>
               </div>
-              
               <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
                 <div className="flex items-center gap-2 mb-2">
                   <Info className="h-5 w-5 text-amber-600" />
@@ -711,7 +705,6 @@ const CreateUser = () => {
             </div>
           </div>
         );
-      
       case 3:
         const values = getValues();
         return (
@@ -720,12 +713,10 @@ const CreateUser = () => {
               <CheckCircle className="h-5 w-5" />
               <h2>Revisão e Confirmação</h2>
             </div>
-            
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-100 shadow-sm">
               <h3 className="font-medium text-lg mb-4 text-blue-800 flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-blue-500" /> Resumo do Cadastro
               </h3>
-              
               <div className="flex flex-col md:flex-row gap-6 mb-6 items-center md:items-start">
                 <div className="relative">
                   <Avatar className="h-24 w-24 border-4 border-white shadow-xl">
@@ -738,16 +729,11 @@ const CreateUser = () => {
                     <CheckCircle className="h-5 w-5 text-green-500" />
                   </div>
                 </div>
-                
                 <div className="text-center md:text-left">
                   <h4 className="text-xl font-bold text-gray-800">{values.nome}</h4>
                   <p className="text-gray-600 mb-3">{values.email}</p>
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mt-2">
-                    <Badge className={`${
-                      values.status === "Ativo" ? "bg-green-500" :
-                      values.status === "Inativo" ? "bg-amber-500" :
-                      "bg-red-500"
-                    } text-white px-3 py-1`}>
+                    <Badge className={`${values.status === "Ativo" ? "bg-green-500" : values.status === "Inativo" ? "bg-amber-500" : "bg-red-500"} text-white px-3 py-1`}>
                       {values.status}
                     </Badge>
                     {values.isAdmin && <Badge className="bg-blue-500 text-white px-3 py-1">Administrador</Badge>}
@@ -756,7 +742,6 @@ const CreateUser = () => {
                   </div>
                 </div>
               </div>
-              
               <div className="space-y-6 bg-white rounded-lg p-4 border border-blue-100 shadow-inner">
                 <div>
                   <h4 className="font-medium border-b border-blue-100 pb-2 text-blue-700 flex items-center gap-2">
@@ -777,7 +762,6 @@ const CreateUser = () => {
                     </div>
                   </div>
                 </div>
-                
                 <div>
                   <h4 className="font-medium border-b border-blue-100 pb-2 text-blue-700 flex items-center gap-2">
                     <Building className="h-4 w-4" /> Informações Profissionais
@@ -801,7 +785,6 @@ const CreateUser = () => {
                     </div>
                   </div>
                 </div>
-                
                 {values.observacoes && (
                   <div>
                     <h4 className="font-medium border-b border-blue-100 pb-2 text-blue-700 flex items-center gap-2">
@@ -811,14 +794,13 @@ const CreateUser = () => {
                   </div>
                 )}
               </div>
-            </div>
-            
-            <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-              <div className="flex items-center gap-2">
-                <Info className="h-5 w-5 text-blue-600" />
-                <p className="text-sm text-blue-700">
-                  Verifique todas as informações antes de finalizar o cadastro.
-                </p>
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <div className="flex items-center gap-2">
+                  <Info className="h-5 w-5 text-blue-600" />
+                  <p className="text-sm text-blue-700">
+                    Verifique todas as informações antes de finalizar o cadastro.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -837,25 +819,19 @@ const CreateUser = () => {
             <CardTitle className="text-xl md:text-2xl font-bold flex items-center gap-2 mb-6">
               <UserPlus className="h-5 w-5 md:h-6 md:w-6 text-primary" /> Cadastro de Novo Membro
             </CardTitle>
-            
             {/* Barra de progresso e passos */}
             <div className="space-y-4 md:space-y-6">
               <div className="flex justify-between text-sm font-medium">
                 <span>Passo {currentStep + 1} de {steps.length}</span>
                 <span>{Math.round(progressValue)}% completo</span>
               </div>
-              
-              {/* Barra de progresso para desktop */}
               <Progress value={progressValue} className="h-2 hidden md:block" />
-              
               <div className="hidden md:flex justify-between">
                 {steps.map((step, index) => {
                   const StepIcon = step.icon;
                   const status = 
                     currentStep > index ? "completed" : 
-                    currentStep === index ? "current" : 
-                    "upcoming";
-                  
+                    currentStep === index ? "current" : "upcoming";
                   return (
                     <div key={step.id} className="flex flex-col items-center">
                       <div 
@@ -874,8 +850,7 @@ const CreateUser = () => {
                         )}
                         <span className="sr-only">{step.name}</span>
                       </div>
-                      <span 
-                        className={`mt-2 text-sm font-medium
+                      <span className={`mt-2 text-sm font-medium
                           ${status === 'completed' 
                             ? 'text-primary' 
                             : status === 'current' 
@@ -890,7 +865,6 @@ const CreateUser = () => {
                   );
                 })}
               </div>
-              
               {/* Versão mobile dos steps */}
               <div className="flex md:hidden">
                 {steps.map((step, index) => (
@@ -904,14 +878,12 @@ const CreateUser = () => {
                   />
                 ))}
               </div>
-              
               <div className="md:hidden text-center">
                 <span className="text-primary font-medium">{steps[currentStep].name}</span>
                 <p className="text-xs text-gray-500">{steps[currentStep].description}</p>
               </div>
             </div>
           </CardHeader>
-          
           <FormProvider {...methods}>
             <form>
               <CardContent className="pt-6 pb-6">
@@ -927,9 +899,8 @@ const CreateUser = () => {
                   </motion.div>
                 </AnimatePresence>
               </CardContent>
-              
               <CardFooter className="flex justify-between border-t p-4 md:p-6 bg-gray-50/70">
-                <Button
+                <Button 
                   type="button"
                   variant="outline"
                   onClick={prevStep}
@@ -938,9 +909,8 @@ const CreateUser = () => {
                 >
                   <ChevronLeft className="h-4 w-4" /> Voltar
                 </Button>
-                
                 <div className="flex gap-3">
-                  <Button
+                  <Button 
                     type="button"
                     variant="outline"
                     onClick={() => navigate("/usuarios")}
@@ -949,27 +919,33 @@ const CreateUser = () => {
                   >
                     Cancelar
                   </Button>
-                  
                   {currentStep < steps.length - 1 ? (
                     <Button 
                       type="button"
-                      onClick={nextStep} 
+                      onClick={nextStep}
+                      disabled={isLoading}
                       className="gap-2 bg-primary hover:bg-primary/90"
                     >
                       Próximo <ChevronRight className="h-4 w-4" />
                     </Button>
                   ) : (
-                    <Button
+                    <Button 
                       type="button"
                       onClick={methods.handleSubmit(onSubmit)}
                       disabled={isLoading}
                       className="gap-2 bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800"
                     >
                       {isLoading ? (
-                        <><motion.div 
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                        ><Sparkles className="h-4 w-4" /></motion.div> Cadastrando...</>
+                        <>
+                          <motion.div 
+                            className="h-4 w-4" 
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          >
+                            <Sparkles className="h-4 w-4" />
+                          </motion.div>
+                          Cadastrando...
+                        </>
                       ) : (
                         <>
                           <Sparkles className="h-4 w-4" /> Finalizar Cadastro

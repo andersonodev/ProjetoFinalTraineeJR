@@ -37,25 +37,124 @@ Repositório base do grupo anterior:
 - [ ]  Realizar **apresentação final**, abordando os desafios enfrentados.
 - [ ]  Separar versão com apenas os requisitos obrigatórios da versão com funcionalidades extras (se houver).
 
-## 🚀 Tecnologias Sugeridas
+## 🚀 Tecnologias Utilizadas
 
-- **Frontend**: React, HTML, CSS, JavaScript
-- **Backend**: Firebase Functions, Node.js (se aplicável)
-- **Banco de Dados**: Firebase Firestore
+- **Frontend**: React, HTML, CSS, TypeScript, Tailwind CSS
+- **Backend**: Firebase Functions, Node.js, Express.js
+- **Banco de Dados**: Firebase Firestore, Firebase Realtime Database
+- **Autenticação**: Firebase Authentication
 - **Hospedagem**: Firebase Hosting
+- **Testes**: Jest, React Testing Library
+- **Controle de Versionamento**: Git, GitHub Actions (para CI/CD)
+- **Ferramentas de Desenvolvimento**: ESLint, Prettier, Husky
+
+## 📄 Funcionalidades
+
+- **Gestão de Usuários**: Cadastro, edição, exclusão e visualização de informações.
+- **Sistema de Penalidades**: Controle de notificações e advertências com regras automáticas.
+- **Dashboard**: Exibição de estatísticas e status dos membros.
+- **Autenticação**: Login e reset de senha.
+- **Histórico de Ações**: Registro detalhado de todas as ações realizadas no sistema.
+
+### Diferenciação de Funcionalidades por Tipo de Usuário
+
+- **Usuário Normal**:
+  - Visualizar informações pessoais e notificações.
+  - Consultar o histórico de ações relacionadas ao próprio perfil.
+  - Receber notificações e advertências.
+
+- **Administrador**:
+  - Todas as funcionalidades de um usuário normal.
+  - Gerenciar usuários (cadastrar, editar, excluir).
+  - Atribuir notificações e advertências a colaboradores.
+  - Visualizar o status de atividade de todos os colaboradores.
+
+- **Super Administrador**:
+  - Todas as funcionalidades de um administrador.
+  - Gerenciar permissões de outros administradores.
+  - Acessar relatórios completos e estatísticas avançadas.
+  - Configurar parâmetros do sistema (ex.: regras de penalidades).
+
+## 🛠️ Configuração do Projeto
+
+### Pré-requisitos
+
+- Node.js (versão 16 ou superior)
+- Firebase CLI
+- Gerenciador de pacotes (npm ou yarn)
+
+### Passos para Configuração
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/ProjetoFinalTraineeJR.git
+   cd ProjetoFinalTraineeJR
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+3. Configure o Firebase:
+   - Faça login no Firebase CLI:
+     ```bash
+     firebase login
+     ```
+   - Inicialize o Firebase no projeto:
+     ```bash
+     firebase init
+     ```
+
+4. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+5. Acesse a aplicação no navegador:
+   ```
+   http://localhost:8080
+   ```
+
+### Deploy para Produção
+
+1. Gere o build da aplicação:
+   ```bash
+   npm run build
+   ```
+
+2. Faça o deploy no Firebase Hosting:
+   ```bash
+   firebase deploy
+   ```
 
 ## 📄 Documentação
 
-A documentação completa do projeto será incluída ao final, contendo:
-
-- Explicações das funcionalidades implementadas
-- Estrutura do banco de dados
-- Fluxo de autenticação e permissões
-- Desafios enfrentados e soluções adotadas
+- **Explicações das funcionalidades implementadas**: Detalhamento de cada funcionalidade do sistema.
+- **Estrutura do banco de dados**: Descrição das coleções e documentos no Firestore.
+- **Fluxo de autenticação e permissões**: Como o sistema gerencia usuários e níveis de acesso.
+- **Desafios enfrentados e soluções adotadas**: Relato das dificuldades e como foram superadas.
 
 ## 🧩 Contribuição
 
 Este projeto valoriza o trabalho em equipe. Caso algum membro possua menor conhecimento técnico, é dever dos demais auxiliá-lo no processo para garantir a entrega conjunta e a aprendizagem de todos.
+
+### Como Contribuir
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature:
+   ```bash
+   git checkout -b minha-feature
+   ```
+3. Commit suas alterações:
+   ```bash
+   git commit -m "Minha nova feature"
+   ```
+4. Envie para o repositório remoto:
+   ```bash
+   git push origin minha-feature
+   ```
+5. Abra um Pull Request.
 
 ## IBEEEEEEEE MECCCCCCCCC 💙💙💙💙💙
 

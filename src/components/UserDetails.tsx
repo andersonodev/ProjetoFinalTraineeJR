@@ -246,6 +246,20 @@ export function UserDetails({ user, open, onOpenChange, onUserUpdate, isAdmin = 
     "Vice-Presidente"
   ];
 
+  const cursosDisponiveis = [
+    "Administração",
+    "Engenharia",
+    "Direito",
+    "Marketing",
+    "Recursos Humanos",
+    "Tecnologia da Informação",
+    "Gestão de Projetos",
+    "Finanças",
+    "Psicologia",
+    "Design",
+    "Comunicação"
+  ];
+
   const warningCount = user.advertencias || 0;
   const notificationCount = user.notificacoes || 0;
 
@@ -1199,7 +1213,7 @@ export function UserDetails({ user, open, onOpenChange, onUserUpdate, isAdmin = 
                                   <InfoItem
                                     icon={<Briefcase className="h-4 w-4 text-blue-500" />}
                                     label="Cargo"
-                                    value={user.cargo || user.role || "Não informado"}
+                                    value={user.role || user.role || "Não informado"}
                                   />
                                   
                                   <InfoItem

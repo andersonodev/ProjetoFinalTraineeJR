@@ -67,7 +67,7 @@ const Dashboard = () => {
     const setoresList = ["Consultoria Empresarial", "Departamento Pessoal", 
       "Desenvolvimento Organizacional", "Diretoria", "Engenharia", "Financeiro", 
       "Gestão de Pessoas", "Gestão de Processos", "Inovações", "Jurídico", 
-      "Marketing", "Produtos", "Recrutamento", "Vendas"];
+      "Marketing", "Produtos", "Recrutamento", "Vendas", "Comercial"];
     
     // Também inclui qualquer setor presente nos usuários que não esteja na lista padrão
     users.forEach(user => {

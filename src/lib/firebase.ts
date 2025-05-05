@@ -23,7 +23,7 @@ const storage = getStorage(app); // Inicializar o Storage
 export { auth, db, storage };
 export default app;
 
-// Função para salvar imagem no Firebase Storage e atualizar o perfil do usuário
+// Função para salvar imagem como base64 diretamente no Firestore
 export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: string): Promise<string> => {
   try {
     console.log(`Iniciando processamento de imagem para usuário: ${userId}`);
@@ -42,46 +42,25 @@ export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: str
       return imageDataUrl; // Para IDs temporários, só retornamos a imagem processada
     }
     
-    // Gerar um caminho único para a imagem no Storage
-    const timestamp = new Date().getTime();
-    const imagePath = `profile_images/${userId}/${timestamp}.jpg`;
-    const storageRef = ref(storage, imagePath);
-    
-    // Remover o prefixo da string base64 se existir
-    const base64WithoutPrefix = imageDataUrl.includes('data:') 
-      ? imageDataUrl.split(',')[1] 
-      : imageDataUrl;
-    
-    // Fazer upload da imagem para o Storage
-    await uploadString(storageRef, base64WithoutPrefix, 'base64', {
-      contentType: 'image/jpeg'
-    });
-    
-    // Obter URL de download da imagem
-    const downloadURL = await getDownloadURL(storageRef);
-    
-    // Atualizar o documento do usuário com a URL da imagem
+    // Verificar se o documento do usuário existe antes de atualizá-lo
     const userRef = doc(db, "users", userId);
-    
-    // Verificar se o usuário existe
     const docSnap = await getDoc(userRef);
     
     if (!docSnap.exists()) {
       throw new Error(`Usuário com ID ${userId} não encontrado`);
     }
     
-    // Atualizar o documento do usuário com a URL da imagem
+    // Atualizar o documento do usuário com a imagem em base64
     await updateDoc(userRef, {
-      avatarUrl: downloadURL,
-      avatarStoragePath: imagePath,
+      avatarUrl: imageDataUrl,
       avatarUpdatedAt: serverTimestamp()
     });
     
-    console.log(`Imagem salva com sucesso para usuário ${userId} no Storage`);
+    console.log(`Imagem salva com sucesso para usuário ${userId} diretamente no Firestore`);
     
-    return downloadURL;
+    return imageDataUrl;
   } catch (error) {
-    console.error("Erro ao salvar imagem:", error);
+    console.error("Erro ao salvar imagem base64:", error);
     throw error;
   }
 };
@@ -115,6 +94,30 @@ export const getUserData = async (userId: string) => {
     console.error("Erro ao buscar dados do usuário:", error);
     throw error;
   }
+};
+
+// Função para fazer upload da imagem de perfil (agora usando base64)
+export const uploadProfileImage = async (userId: string, imageFile: File): Promise<string> => {
+  try {
+    // Converter o arquivo para base64
+    const base64Image = await fileToBase64(imageFile);
+    
+    // Usar a função saveProfileImageAsBase64 existente para salvar a imagem
+    return await saveProfileImageAsBase64(userId, base64Image);
+  } catch (error) {
+    console.error("Erro ao fazer upload da imagem de perfil:", error);
+    throw error;
+  }
+};
+
+// Função auxiliar para converter File para base64
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 };
 
 export const firebaseService = {

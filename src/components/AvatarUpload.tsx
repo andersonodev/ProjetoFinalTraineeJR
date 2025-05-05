@@ -165,7 +165,7 @@ export function AvatarUpload({ currentAvatar, onAvatarChange, name, userId }: Av
         onAvatarChange(processedImageUrl); // Passar a imagem para o componente pai
         toast.success("Imagem processada com sucesso!");
       } else {
-        // Para usuários existentes, salvamos diretamente no Firestore
+        // Para usuários existentes, salvamos diretamente no Firestore como base64
         try {
           // Verificar se precisamos comprimir ainda mais
           const sizeInBytes = Math.round((processedImageUrl.length * 3) / 4);
@@ -194,7 +194,6 @@ export function AvatarUpload({ currentAvatar, onAvatarChange, name, userId }: Av
       toast.error(error.message || "Falha ao processar a imagem");
     } finally {
       setIsUploading(false);
-      
       // Limpar o input de arquivo para permitir selecionar o mesmo arquivo novamente
       if (fileInputRef.current) {
         fileInputRef.current.value = "";

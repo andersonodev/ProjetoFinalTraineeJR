@@ -137,9 +137,16 @@ const cargosDisponiveis = [
 
 const cursosDisponiveis = [
   "Administração",
-  "Ciência da Computação",
+  "Ciência de Dados e Inteligência Artificial",
+  "Ciências Contábeis",
+  "Ciências Econômicas",
+  "Direito",
+  "Engenharia Civil",
+  "Engenharia de Computação",
+  "Engenharia de Produção",
+  "Engenharia Mecânica",
   "Engenharia de Software",
-  "Não se aplica"
+  "Relações Internacionais"
 ];
 
 // Define os passos do formulário com descrições mais detalhadas

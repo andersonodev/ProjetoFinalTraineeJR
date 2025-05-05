@@ -12,7 +12,7 @@ import { User } from "@/types/user";
 import { UserDetails } from "@/components/UserDetails";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks-velho/use-mobile";
 
 interface UsersTableProps {
   users: User[];
@@ -172,7 +172,7 @@ const UsersTable = ({
                     </div>
                   </TableCell>
                   <TableCell>{user.setor || "-"}</TableCell>
-                  <TableCell>{user.role || user.role || "-"}</TableCell>
+                  <TableCell>{user.role || user.cargo || "-"}</TableCell>
                   <TableCell>
                     <Badge
                       variant="default"

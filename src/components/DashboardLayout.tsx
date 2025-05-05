@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
-import { useMobile } from "@/hooks/use-mobile";
+import { useMobile } from "@/hooks-velho/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface DashboardLayoutProps {

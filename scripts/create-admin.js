@@ -28,20 +28,15 @@ async function createAdminUser() {
     // Tenta criar o usuário
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     uid = userCredential.user.uid;
-    console.log("✅ Usuário criado com sucesso.");
   } catch (error) {
     if (error.code === 'auth/email-already-in-use') {
-      console.warn("⚠️ Email já está em uso. Tentando fazer login para recuperar UID...");
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         uid = userCredential.user.uid;
-        console.log("✅ Login bem-sucedido. UID recuperado.");
       } catch (loginError) {
-        console.error("❌ Não foi possível logar com o email existente:", loginError.message);
         process.exit(1);
       }
     } else {
-      console.error("❌ Erro inesperado ao criar usuário:", error.message);
       process.exit(1);
     }
   }
@@ -62,9 +57,8 @@ async function createAdminUser() {
       isAdmin: true,
       createdAt: serverTimestamp()
     });
-    console.log("✅ Documento do administrador criado/atualizado com sucesso no Firestore.");
   } catch (firestoreError) {
-    console.error("❌ Erro ao criar documento no Firestore:", firestoreError.message);
+    process.exit(1);
   }
 
   process.exit();

@@ -25,6 +25,7 @@ export interface User {
   bio?: string; // Biografia do usuário
   cidade?: string; // Cidade do usuário
   matricula?: string; // Matrícula do usuário
+  cargo?: string; // Cargo do usuário (adicionado para compatibilidade)
 }
 
 // Interface para justificar ações como advertência, notificação ou banimento

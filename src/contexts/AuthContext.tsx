@@ -61,22 +61,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (docSnap.exists()) {
         const userDocData = docSnap.data();
-        console.log("Dados do usuário carregados:", { 
-          id: docSnap.id, 
-          isAdmin: userDocData.isAdmin, 
-          isPowerUser: userDocData.isPowerUser,
-          status: userDocData.status
-        });
         
         setUserData({ id: docSnap.id, ...userDocData } as UserType);
-        
-        // Verificar se o usuário está banido
-        if (userDocData.status === "Banido") {
-          toast.error("Esta conta foi desativada pelo administrador. Entre em contato para mais informações.");
-          await firebaseSignOut(auth);
-          navigate('/login');
-          return null;
-        }
         
         return userDocData;
       } else {
@@ -91,10 +77,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     setIsLoading(true);
-    console.log("Iniciando verificação de autenticação...");
     
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("Estado de autenticação alterado:", user ? "Usuário autenticado" : "Sem usuário");
       setCurrentUser(user);
       
       if (user) {
@@ -111,32 +95,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password: string) => {
     try {
-      // Verificar se são as credenciais de demonstração
-      if (email === "admin@ibmecjr.com" || email === "admin@ibmecjrsolucoes.com.br") {
-        if (password !== "123456") {
-          // Se o email é de demo mas a senha está errada, mostrar uma dica
-          toast.error("Senha incorreta. Para o usuário de demonstração, utilize a senha: 123456");
-          throw new Error("Credenciais inválidas para o usuário de demonstração");
-        }
-        
-        // Garantir que sempre usamos o email correto
-        email = "admin@ibmecjrsolucoes.com.br";
-      }
-      
-      console.log("Tentando login com:", { email });
-      
       // Fazer login
       const userCredential = await firebaseSignIn(auth, email, password);
-      
       // Buscar dados do usuário para verificar status e permissões
       const userData = await fetchUserData(userCredential.user.uid);
-      
-      if (userData?.status === "Banido") {
-        toast.error("Sua conta foi desativada. Entre em contato com o administrador.");
-        await firebaseSignOut(auth);
-        return;
-      }
-      
       navigate('/dashboard');
     } catch (error: any) {
       console.error('Erro no login:', error);

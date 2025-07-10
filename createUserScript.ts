@@ -7,7 +7,6 @@ import { createUser } from "./firebaseAdmin";
     const nome = "Admin";
 
     const user = await createUser(email, senha, nome);
-    console.log("Usuário criado com sucesso:", user);
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
   }

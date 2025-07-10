@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
-import { useMobile } from "@/hooks-velho/use-mobile";
+import { useMobile } from "@/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface DashboardLayoutProps {
@@ -11,7 +11,15 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sideUrl, setSideUrl] = useState<string | null>(null);
+  const [sideLabel, setSideLabel] = useState<string | null>(null);
   const isMobile = useMobile();
+
+  // Função para abrir externo, recebendo url e label
+  const handleOpenExternal = (url: string, label?: string | null) => {
+    setSideUrl(url);
+    setSideLabel(label ?? null);
+  };
 
   // Close sidebar when switching to desktop view
   useEffect(() => {
@@ -69,7 +77,17 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           >
             <Sidebar 
               isMobile={isMobile} 
-              onCloseMobile={() => setSidebarOpen(false)} 
+              onCloseMobile={() => setSidebarOpen(false)}
+              onOpenExternal={(url: string) => {
+                if (!url) return; // Garante que url nunca é null
+                // Descobrir label do item pelo url
+                let label = null;
+                if (url.includes("brasiljunior.org.br")) label = "Brasil Júnior";
+                if (url.includes("riojunior.org.br")) label = "Rio Júnior";
+                if (url.includes("calendar.google.com")) label = "Google Agenda";
+                if (url.includes("mail.google.com")) label = "Gmail";
+                handleOpenExternal(url, label);
+              }}
             />
           </motion.div>
         )}
@@ -89,11 +107,53 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         )}
       </AnimatePresence>
 
-      {/* Main content com padding ajustado */}
-      <div className={`flex-1 overflow-auto ${isMobile ? "pt-14 pb-4" : ""}`}>
-        <main className="p-3 md:p-6 animate-fade-in">
-          {children}
-        </main>
+      {/* Main content + split view */}
+      <div className={`flex-1 flex overflow-auto ${isMobile ? "pt-14 pb-4" : ""}`}>
+        {sideUrl && sideLabel === "Brasil Júnior" ? (
+          <div className="w-full h-full relative flex flex-col">
+            <div className="flex items-center justify-between px-6 py-3 border-b bg-white/90 z-10">
+              <h2 className="text-lg font-semibold text-gray-800">Brasil Júnior</h2>
+              <button
+                className="bg-gray-100 hover:bg-gray-200 rounded-full p-1 shadow"
+                onClick={() => { setSideUrl(null); setSideLabel(null); }}
+                title="Fechar"
+              >
+                <span className="sr-only">Fechar</span>
+                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <iframe
+              src={sideUrl}
+              title="Brasil Júnior"
+              className="w-full h-full flex-1"
+              frameBorder={0}
+            />
+          </div>
+        ) : sideUrl ? (
+          <div className="w-[600px] max-w-full border-l bg-white shadow-lg h-full relative flex flex-col">
+            <div className="flex items-center justify-between px-6 py-3 border-b bg-white/90 z-10">
+              <h2 className="text-lg font-semibold text-gray-800">{sideLabel || "Conteúdo Externo"}</h2>
+              <button
+                className="bg-gray-100 hover:bg-gray-200 rounded-full p-1 shadow"
+                onClick={() => { setSideUrl(null); setSideLabel(null); }}
+                title="Fechar"
+              >
+                <span className="sr-only">Fechar</span>
+                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <iframe
+              src={sideUrl}
+              title={sideLabel || "Conteúdo Externo"}
+              className="w-full h-full flex-1"
+              frameBorder={0}
+            />
+          </div>
+        ) : (
+          <main className="flex-1 p-3 md:p-6 animate-fade-in">
+            {children}
+          </main>
+        )}
       </div>
     </div>
   );

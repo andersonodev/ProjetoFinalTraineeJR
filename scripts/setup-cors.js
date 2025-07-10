@@ -11,7 +11,7 @@ if (!fs.existsSync(corsConfigPath)) {
   process.exit(1);
 }
 
-console.log('🔧 Configurando regras CORS para o Firebase Storage...');
+// Removidos todos os console.log()
 
 try {
   // Substitua pelo nome do seu bucket
@@ -20,10 +20,10 @@ try {
   // Executa o comando gsutil para definir as regras CORS
   const command = `npx firebase-tools storage:cors set ${corsConfigPath} --project ibmec-jr-solucoes`;
   
-  console.log(`Executando: ${command}`);
+  // Removidos todos os console.log()
   execSync(command, { stdio: 'inherit' });
   
-  console.log('✅ Regras CORS configuradas com sucesso!');
+  // Removidos todos os console.log()
 } catch (error) {
   console.error('❌ Erro ao configurar regras CORS:', error.message);
   console.log('\n📋 Para configurar manualmente:');

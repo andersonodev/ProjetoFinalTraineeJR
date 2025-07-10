@@ -10,7 +10,10 @@ import {
   ChevronDown,
   ChevronRight,
   X,
-  Menu
+  Menu,
+  Calendar,
+  Mail,
+  Globe
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, createContext, useContext, useEffect } from "react";
@@ -36,6 +39,7 @@ interface NavItemProps {
 interface SidebarProps {
   isMobile?: boolean;
   onCloseMobile?: () => void;
+  onOpenExternal?: (url: string) => void;
 }
 
 const SidebarContext = createContext<{ collapsed: boolean; setCollapsed: (collapsed: boolean) => void }>({
@@ -79,7 +83,7 @@ const NavItem = ({ to, icon: Icon, label, isCollapsed, showTooltip = true }: Nav
   return content;
 };
 
-const MenuCategory = ({ title, items, isCollapsed }: {
+const MenuCategory = ({ title, items, isCollapsed, onOpenExternal }: {
   title: string;
   items: {
     to: string;
@@ -87,8 +91,10 @@ const MenuCategory = ({ title, items, isCollapsed }: {
     label: string;
     adminOnly?: boolean;
     powerUserOnly?: boolean;
+    external?: boolean;
   }[];
   isCollapsed: boolean;
+  onOpenExternal?: (url: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const { isAdmin, isPowerUser } = useAuth();
@@ -118,13 +124,44 @@ const MenuCategory = ({ title, items, isCollapsed }: {
       {(isOpen || isCollapsed) && (
         <div className="space-y-1">
           {filteredItems.map((item, i) => (
-            <NavItem
-              key={i}
-              to={item.to}
-              icon={item.icon}
-              label={item.label}
-              isCollapsed={isCollapsed}
-            />
+            item.external && onOpenExternal ? (
+              <button
+                key={i}
+                type="button"
+                onClick={() => onOpenExternal(item.to)}
+                className={cn(
+                  "sidebar-link flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                  isCollapsed ? "justify-center px-2" : "",
+                  "text-white/80 hover:bg-white/10 hover:text-white"
+                )}
+              >
+                <item.icon size={20} className="text-white" />
+                {!isCollapsed && <span>{item.label}</span>}
+              </button>
+            ) : item.external ? (
+              <a
+                key={i}
+                href={item.to}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "sidebar-link flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                  isCollapsed ? "justify-center px-2" : "",
+                  "text-white/80 hover:bg-white/10 hover:text-white"
+                )}
+              >
+                <item.icon size={20} className="text-white" />
+                {!isCollapsed && <span>{item.label}</span>}
+              </a>
+            ) : (
+              <NavItem
+                key={i}
+                to={item.to}
+                icon={item.icon}
+                label={item.label}
+                isCollapsed={isCollapsed}
+              />
+            )
           ))}
         </div>
       )}
@@ -132,7 +169,7 @@ const MenuCategory = ({ title, items, isCollapsed }: {
   );
 };
 
-const Sidebar = ({ isMobile = false, onCloseMobile }: SidebarProps) => {
+const Sidebar = ({ isMobile = false, onCloseMobile, onOpenExternal }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { userData, isAdmin, isPowerUser, signOut } = useAuth();
@@ -185,6 +222,13 @@ const Sidebar = ({ isMobile = false, onCloseMobile }: SidebarProps) => {
       items: [
         { to: "/cadastrar-usuario", icon: UserPlus, label: "Cadastrar Usuário", adminOnly: true },
         { to: "/perfil", icon: User, label: "Meu Perfil" },
+      ]
+    },
+    {
+      title: "Google",
+      items: [
+        { to: "https://calendar.google.com", icon: Calendar, label: "Agenda", external: true },
+        { to: "https://mail.google.com", icon: Mail, label: "Gmail", external: true },
       ]
     }
   ];
@@ -267,6 +311,7 @@ const Sidebar = ({ isMobile = false, onCloseMobile }: SidebarProps) => {
                   title={category.title} 
                   items={category.items} 
                   isCollapsed={actuallyCollapsed}
+                  onOpenExternal={onOpenExternal}
                 />
               ))}
             </nav>

@@ -7,6 +7,9 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      '/telegram': 'http://localhost:3000',
+    },
   },
   plugins: [
     react()

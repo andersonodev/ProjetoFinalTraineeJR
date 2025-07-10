@@ -12,7 +12,7 @@ import { User } from "@/types/user";
 import { UserDetails } from "@/components/UserDetails";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion } from "framer-motion";
-import { useIsMobile } from "@/hooks-velho/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface UsersTableProps {
   users: User[];

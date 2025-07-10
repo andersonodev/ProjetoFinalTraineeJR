@@ -6,7 +6,6 @@ import { db } from "./firebase";
  */
 export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: string): Promise<string> => {
   try {
-    console.log(`Iniciando processamento de imagem para usuário: ${userId}`);
     
     // Limite de tamanho para evitar problemas com o tamanho do documento no Firestore (max 1MB)
     const sizeInBytes = Math.round((imageDataUrl.length * 3) / 4);
@@ -18,7 +17,6 @@ export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: str
     
     // Verificar se é um ID temporário (usado durante cadastro de novo usuário)
     if (userId.startsWith('temp_')) {
-      console.log('ID temporário detectado, retornando imagem processada localmente');
       return imageDataUrl; // Para IDs temporários, só retornamos a imagem processada
     }
     
@@ -35,8 +33,6 @@ export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: str
       avatarUrl: imageDataUrl,
       avatarUpdatedAt: serverTimestamp()
     });
-    
-    console.log(`Imagem salva com sucesso para usuário ${userId}`);
     
     return imageDataUrl;
   } catch (error) {

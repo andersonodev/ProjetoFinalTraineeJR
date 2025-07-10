@@ -5,12 +5,12 @@ import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from 'fir
 
 // Configuração do Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyC52svDmVusLYswOmZqFhB8BwlvVAlr4As",
-  authDomain: "ibmec-jr-solucoes.firebaseapp.com",
-  projectId: "ibmec-jr-solucoes",
-  storageBucket: "ibmec-jr-solucoes.appspot.com",
-  messagingSenderId: "787954916425",
-  appId: "1:787954916425:web:826c5ef12de4c207f13398"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Evita múltiplas inicializações
@@ -26,7 +26,6 @@ export default app;
 // Função para salvar imagem como base64 diretamente no Firestore
 export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: string): Promise<string> => {
   try {
-    console.log(`Iniciando processamento de imagem para usuário: ${userId}`);
     
     // Limite de tamanho para evitar problemas
     const sizeInBytes = Math.round((imageDataUrl.length * 3) / 4);
@@ -38,7 +37,6 @@ export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: str
     
     // Verificar se é um ID temporário (usado durante cadastro de novo usuário)
     if (userId.startsWith('temp_')) {
-      console.log('ID temporário detectado, retornando imagem processada localmente');
       return imageDataUrl; // Para IDs temporários, só retornamos a imagem processada
     }
     
@@ -56,8 +54,6 @@ export const saveProfileImageAsBase64 = async (userId: string, imageDataUrl: str
       avatarUpdatedAt: serverTimestamp()
     });
     
-    console.log(`Imagem salva com sucesso para usuário ${userId} diretamente no Firestore`);
-    
     return imageDataUrl;
   } catch (error) {
     console.error("Erro ao salvar imagem base64:", error);
@@ -72,7 +68,6 @@ export const deleteProfileImage = async (storagePath: string): Promise<void> => 
   try {
     const imageRef = ref(storage, storagePath);
     await deleteObject(imageRef);
-    console.log(`Imagem excluída com sucesso: ${storagePath}`);
   } catch (error) {
     console.error("Erro ao excluir imagem:", error);
     throw error;

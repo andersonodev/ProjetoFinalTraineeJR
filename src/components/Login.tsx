@@ -171,9 +171,7 @@ const Login = () => {
             </Form>
           </CardContent>
           <CardFooter className="">
-            <p className="">
-              Use <span className="">admin@ibmecjrsolucoes.com.br</span> e senha <span className="">123456</span> para demonstração
-            </p>
+            {/* Mensagem de demonstração removida por segurança */}
           </CardFooter>
         </Card>
 

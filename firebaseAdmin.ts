@@ -28,7 +28,6 @@ export async function createUser(email: string, senha: string, nome: string) {
       dataEntradaEmpresa: new Date().toISOString(),
     });
 
-    console.log(`Usuário criado com sucesso: ${userRecord.uid}`);
     return userRecord;
   } catch (error) {
     console.error("Erro ao criar usuário:", error);

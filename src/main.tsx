@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import './index.css';
 import { Toaster } from "sonner";
-import { ToastProvider } from "./hooks-velho/toast";
+import { ToastProvider } from "@/hooks/use-toast";
 import { AuthProvider } from "./contexts/AuthContext";
 
 // Criação do cliente

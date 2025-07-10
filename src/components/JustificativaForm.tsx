@@ -83,13 +83,6 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
     setIsSubmitting(true);
     
     try {
-      // Adicionar log de diagnóstico
-      console.log(`Processando ação ${actionType} para usuário ${user.id}`, {
-        tipoAcao: actionType,
-        advertenciasAtuais: user.advertencias || 0,
-        statusAtual: user.status
-      });
-      
       // Verificar se o usuário está autenticado
       const auth = getAuth();
       const currentUser = auth.currentUser;
@@ -99,8 +92,6 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
         setIsSubmitting(false);
         return;
       }
-      
-      console.log("Usuário atual:", currentUser.uid, currentUser.email);
       
       try {
         // Registrar a tentativa de ação no Firebase - para fins de auditoria
@@ -123,7 +114,6 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
         // Limpar o formulário
         setMotivo("");
       } catch (innerError) {
-        console.error("Erro específico ao registrar ação:", innerError);
         if (innerError instanceof Error) {
           toast.error(`Erro de permissão: ${innerError.message}. Verifique se você tem permissões adequadas.`);
         } else {
@@ -131,7 +121,6 @@ export function JustificativaForm({ open, onOpenChange, user, actionType, onConf
         }
       }
     } catch (error) {
-      console.error("Erro ao processar ação:", error);
       toast.error("Ocorreu um erro ao processar a ação. Tente novamente.");
     } finally {
       setIsSubmitting(false);

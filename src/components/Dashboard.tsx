@@ -35,11 +35,6 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { isAdmin, isPowerUser } = useAuth();
 
-  // Adicionando logs para debug
-  useEffect(() => {
-    console.log("Permissões do usuário:", { isAdmin, isPowerUser });
-  }, [isAdmin, isPowerUser]);
-
   const fetchUsers = async () => {
     try {
       setIsLoading(true);
@@ -103,9 +98,6 @@ const Dashboard = () => {
         >
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-gray-800 mb-1">Dashboard</h1>
-            <p className="text-muted-foreground">
-              Gerencie os usuários e acompanhe as métricas do sistema.
-            </p>
           </div>
           {(isAdmin || isPowerUser) && (
             <Link to="/cadastrar-usuario">

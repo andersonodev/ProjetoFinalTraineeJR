@@ -7,8 +7,8 @@ import Login from "./components/Login";
 import CreateUser from "./components/CreateUser";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
-import EsqueceuSenhaPage from "./components/EsqueceuSenha";
-import DefinirSenhaPage from "./components/DefinirSenha";
+import EsqueceuSenhaPage from "./components/pages/EsqueceuSenha";
+import DefinirSenhaPage from "./components/pages/DefinirSenha";
 
 
 import { ProtectedRoute } from "@/components/ProtectedRoute";

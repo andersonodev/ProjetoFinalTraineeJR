@@ -77,6 +77,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Definição do tipo das props para o componente InfoItem
 interface InfoItemProps {
@@ -210,6 +211,7 @@ export function UserDetails({ user, open, onOpenChange, onUserUpdate, isAdmin = 
   const [isProcessing, setIsProcessing] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editSection, setEditSection] = useState<"personal" | "professional" | "">("");
+  const { currentUser } = useAuth();
   
   // Lista de setores e cargos disponíveis para seleção
   const setoresDisponiveis = [
@@ -354,13 +356,15 @@ export function UserDetails({ user, open, onOpenChange, onUserUpdate, isAdmin = 
 
   // Função para lidar com a confirmação de ação na justificativa
   const handleConfirmAction = async (motivo: string) => {
+    // Proteção extra: impedir ação em si mesmo
+    if (currentUser && user.id === currentUser.uid) {
+      toast.error("Você não pode aplicar advertência ou notificação em si mesmo!");
+      setIsProcessing(false);
+      setShowJustificativa(false);
+      return;
+    }
     setIsProcessing(true);
     try {
-      console.log("Processando ação", actionType, "para usuário", user.id, {
-        tipoAcao: actionType,
-        advertenciasAtuais: user.advertencias,
-        statusAtual: user.status
-      });
       const userRef = doc(db, "users", user.id);
       const userDoc = await getDoc(userRef);
       
@@ -755,7 +759,7 @@ export function UserDetails({ user, open, onOpenChange, onUserUpdate, isAdmin = 
         }
         onOpenChange(newValue);
       }}>
-        <DialogContent className="sm:max-w-xl md:max-w-3xl max-h-[95vh] overflow-y-auto p-0 rounded-xl border shadow-xl">
+        <DialogContent hideCloseButton className="w-full max-w-full sm:max-w-xl md:max-w-3xl max-h-[95vh] overflow-y-auto p-0 rounded-xl border shadow-xl flex flex-col">
           {/* Header premium com efeito de glassmorphism */}
           <motion.div 
             className="relative bg-gradient-to-r from-primary/90 via-primary to-primary/80 overflow-hidden"

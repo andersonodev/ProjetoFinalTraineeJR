@@ -1,5 +1,5 @@
 
-import { useToast } from "@/hooks-velho/use-toast"
+import { useToast } from "@/hooks/use-toast"
 import {
   Toast,
   ToastClose,
